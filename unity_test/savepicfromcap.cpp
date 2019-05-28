@@ -17,6 +17,7 @@ int main(int argc, char const *argv[])
 	cap.open(1);
 
 	char key;
+	int pic=0;
 	while(1){
 		cap>>frame;
 		fiximage= frame.clone(); 
@@ -25,8 +26,7 @@ int main(int argc, char const *argv[])
 		key=cv::waitKey(1);
 		switch(key){
 			case 'q':return 0;
-			case 's':cv::imwrite("../../cap.jpg",fiximage);break;
-
+			case 's':cv::imwrite("../../cap"+std::to_string(pic++)+".jpg",fiximage);break;
 		}
 
 	}

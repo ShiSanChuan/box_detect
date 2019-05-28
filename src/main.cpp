@@ -17,16 +17,20 @@ struct Box
 		BLUE,
 		None
 	};
-	Box(type _Btype,int _axis[3]){
+	Box(type _Btype,int _start_axis[3],int _end_axis[3]){
 		Btype=_Btype;
 		if(_Btype==GREEN)color=cv::Scalar(0,255,0);
 		if(_Btype==RED)color=cv::Scalar(0,0,255);
 		if(_Btype==BLUE)color=cv::Scalar(255,0,0);
-		axis[0]=_axis[0];
-		axis[1]=_axis[1];
-		axis[2]=_axis[2];
+		start_axis[0]=_start_axis[0];
+		start_axis[1]=_start_axis[1];
+		start_axis[2]=_start_axis[2];
+		end_axis[0]=_end_axis[0];
+		end_axis[1]=_end_axis[1];
+		end_axis[2]=_end_axis[2];
 	}
-	int axis[3];
+	int start_axis[3];
+	int end_axis[3];
 	cv::Scalar color;
 	type Btype;
 };
@@ -91,7 +95,9 @@ cv::Mat D=cv::Mat(1,5,CV_32FC1,distCoeffs);
 void drawboxContours(cv::Mat & img,std::vector<cv::Point> &polygon,Box::type _type){
 	std::vector<cv::Point2f> image_points;
 	std::vector<cv::Point3f> qurapoints;
-
+	std::vector<cv::Point2f> _polygon;
+	for(int i=0;i<4;i++)//bug
+		_polygon.push_back(polygon[i]);
 	float p1,p2=20.;
 	if(_type==Box::RED)
 		p1=30.0;
@@ -114,7 +120,9 @@ void drawboxContours(cv::Mat & img,std::vector<cv::Point> &polygon,Box::type _ty
 	}
 	cv::Mat rotation_vector;
 	cv::Mat translation_vector;
-	cv::solvePnP(qurapoints, polygon, CM, D, rotation_vector, translation_vector);
+	cv::solvePnP(qurapoints, _polygon, CM, D, rotation_vector, translation_vector);
+		std::cout<<rotation_vector<<std::endl;
+	std::cout<<translation_vector<<std::endl;
 	std::vector<cv::Point3d> end_point3D;
 	std::vector<cv::Point2d> end_point2D;
 	// int midlenth=linedistance()
@@ -146,6 +154,37 @@ void drawboxContours(cv::Mat & img,std::vector<cv::Point> &polygon,Box::type _ty
 	}
 }
 void drwaAixs(){
+
+}
+void getAbox(cv::Mat & img,std::vector<cv::Point> &polygon,Box::type _type){
+	std::vector<cv::Point2f> image_points;
+	std::vector<cv::Point3f> qurapoints;
+	std::vector<cv::Point2f> _polygon;
+	float p1,p2=20.;
+	if(_type==Box::RED)
+		p1=30.0;
+	else if(_type==Box::GREEN)
+		p1=60.0;
+	else if(_type==Box::BLUE)
+		p1=120.0;
+	else p1=1.0;
+
+	if(pointdistance(polygon[0],polygon[1])>pointdistance(polygon[0],polygon[3])){
+		qurapoints.push_back(cv::Point3f(0.,0.,0.));
+		qurapoints.push_back(cv::Point3f(p1,0.,0.));
+		qurapoints.push_back(cv::Point3f(p1,p2,0.));
+		qurapoints.push_back(cv::Point3f(0.,p2,0.));
+	}else{
+		qurapoints.push_back(cv::Point3f(0.,0.,0.));
+		qurapoints.push_back(cv::Point3f(p2,0.,0.));
+		qurapoints.push_back(cv::Point3f(p2,p1,0.));
+		qurapoints.push_back(cv::Point3f(0.,p1,0.));
+	}
+	for(int i=0;i<4;i++)//bug
+		_polygon.push_back(polygon[i]);
+	cv::Mat rotation_vector;
+	cv::Mat translation_vector;
+	cv::solvePnP(qurapoints, _polygon, CM, D, rotation_vector, translation_vector);//need
 
 }
 void fixpoint(cv::Mat &img,std::vector<cv::Point> &point){
@@ -250,6 +289,7 @@ int main(int argc, const char** argv){
 	std::vector<cv::Vec4i> hierarchy;
 	cv::findContours(midImage, contours,hierarchy, CV_RETR_LIST , CV_CHAIN_APPROX_SIMPLE);
 	cv::drawContours(BLACK_img, contours, -1, cv::Scalar(0,0,0),3);
+
    	// kernel = getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(7, 7));
     // morphologyEx(BLACK_img,BLACK_img,cv::MORPH_OPEN  ,kernel);
 
@@ -279,13 +319,11 @@ int main(int argc, const char** argv){
 			if(Box::GREEN==GetBoxType(color)){
 				std::cout<<"GREEN"<<std::endl;
 			}
-			// for(int i=0;i<4;i++){
-			// 	cv::line(img,polygon[i] , polygon[(i+1)%4],  cv::Scalar(0,255,0),2);
-			// }
 			fixpoint(bak_img,polygon);
 			for(int i=0;i<4;i++){
 				cv::line(img,polygon[i] , polygon[(i+1)%4],  cv::Scalar(0,0,0),2);
 			}
+			drawboxContours(bak_img,polygon,GetBoxType(color));
 		}
 	}
 	cv::imshow("demo", img);

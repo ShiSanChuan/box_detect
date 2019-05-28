@@ -4,6 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
+  "/home/ssc/C++work/box_detect/src/box.cpp" "/home/ssc/C++work/box_detect/build/src/CMakeFiles/hello.dir/box.cpp.o"
   "/home/ssc/C++work/box_detect/src/main.cpp" "/home/ssc/C++work/box_detect/build/src/CMakeFiles/hello.dir/main.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")

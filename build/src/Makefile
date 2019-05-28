@@ -125,104 +125,32 @@ hello/fast:
 	cd /home/ssc/C++work/box_detect/build && $(MAKE) -f src/CMakeFiles/hello.dir/build.make src/CMakeFiles/hello.dir/build
 .PHONY : hello/fast
 
-# Convenience name for target.
-src/CMakeFiles/adjust.dir/rule:
-	cd /home/ssc/C++work/box_detect/build && $(MAKE) -f CMakeFiles/Makefile2 src/CMakeFiles/adjust.dir/rule
-.PHONY : src/CMakeFiles/adjust.dir/rule
+box.o: box.cpp.o
 
-# Convenience name for target.
-adjust: src/CMakeFiles/adjust.dir/rule
-
-.PHONY : adjust
-
-# fast build rule for target.
-adjust/fast:
-	cd /home/ssc/C++work/box_detect/build && $(MAKE) -f src/CMakeFiles/adjust.dir/build.make src/CMakeFiles/adjust.dir/build
-.PHONY : adjust/fast
-
-# Convenience name for target.
-src/CMakeFiles/savecap.dir/rule:
-	cd /home/ssc/C++work/box_detect/build && $(MAKE) -f CMakeFiles/Makefile2 src/CMakeFiles/savecap.dir/rule
-.PHONY : src/CMakeFiles/savecap.dir/rule
-
-# Convenience name for target.
-savecap: src/CMakeFiles/savecap.dir/rule
-
-.PHONY : savecap
-
-# fast build rule for target.
-savecap/fast:
-	cd /home/ssc/C++work/box_detect/build && $(MAKE) -f src/CMakeFiles/savecap.dir/build.make src/CMakeFiles/savecap.dir/build
-.PHONY : savecap/fast
-
-# Convenience name for target.
-src/CMakeFiles/Shi_Tomasi.dir/rule:
-	cd /home/ssc/C++work/box_detect/build && $(MAKE) -f CMakeFiles/Makefile2 src/CMakeFiles/Shi_Tomasi.dir/rule
-.PHONY : src/CMakeFiles/Shi_Tomasi.dir/rule
-
-# Convenience name for target.
-Shi_Tomasi: src/CMakeFiles/Shi_Tomasi.dir/rule
-
-.PHONY : Shi_Tomasi
-
-# fast build rule for target.
-Shi_Tomasi/fast:
-	cd /home/ssc/C++work/box_detect/build && $(MAKE) -f src/CMakeFiles/Shi_Tomasi.dir/build.make src/CMakeFiles/Shi_Tomasi.dir/build
-.PHONY : Shi_Tomasi/fast
-
-Shi_Tomasi.o: Shi_Tomasi.cpp.o
-
-.PHONY : Shi_Tomasi.o
+.PHONY : box.o
 
 # target to build an object file
-Shi_Tomasi.cpp.o:
-	cd /home/ssc/C++work/box_detect/build && $(MAKE) -f src/CMakeFiles/Shi_Tomasi.dir/build.make src/CMakeFiles/Shi_Tomasi.dir/Shi_Tomasi.cpp.o
-.PHONY : Shi_Tomasi.cpp.o
+box.cpp.o:
+	cd /home/ssc/C++work/box_detect/build && $(MAKE) -f src/CMakeFiles/hello.dir/build.make src/CMakeFiles/hello.dir/box.cpp.o
+.PHONY : box.cpp.o
 
-Shi_Tomasi.i: Shi_Tomasi.cpp.i
+box.i: box.cpp.i
 
-.PHONY : Shi_Tomasi.i
-
-# target to preprocess a source file
-Shi_Tomasi.cpp.i:
-	cd /home/ssc/C++work/box_detect/build && $(MAKE) -f src/CMakeFiles/Shi_Tomasi.dir/build.make src/CMakeFiles/Shi_Tomasi.dir/Shi_Tomasi.cpp.i
-.PHONY : Shi_Tomasi.cpp.i
-
-Shi_Tomasi.s: Shi_Tomasi.cpp.s
-
-.PHONY : Shi_Tomasi.s
-
-# target to generate assembly for a file
-Shi_Tomasi.cpp.s:
-	cd /home/ssc/C++work/box_detect/build && $(MAKE) -f src/CMakeFiles/Shi_Tomasi.dir/build.make src/CMakeFiles/Shi_Tomasi.dir/Shi_Tomasi.cpp.s
-.PHONY : Shi_Tomasi.cpp.s
-
-adjustfindhsv.o: adjustfindhsv.cpp.o
-
-.PHONY : adjustfindhsv.o
-
-# target to build an object file
-adjustfindhsv.cpp.o:
-	cd /home/ssc/C++work/box_detect/build && $(MAKE) -f src/CMakeFiles/adjust.dir/build.make src/CMakeFiles/adjust.dir/adjustfindhsv.cpp.o
-.PHONY : adjustfindhsv.cpp.o
-
-adjustfindhsv.i: adjustfindhsv.cpp.i
-
-.PHONY : adjustfindhsv.i
+.PHONY : box.i
 
 # target to preprocess a source file
-adjustfindhsv.cpp.i:
-	cd /home/ssc/C++work/box_detect/build && $(MAKE) -f src/CMakeFiles/adjust.dir/build.make src/CMakeFiles/adjust.dir/adjustfindhsv.cpp.i
-.PHONY : adjustfindhsv.cpp.i
+box.cpp.i:
+	cd /home/ssc/C++work/box_detect/build && $(MAKE) -f src/CMakeFiles/hello.dir/build.make src/CMakeFiles/hello.dir/box.cpp.i
+.PHONY : box.cpp.i
 
-adjustfindhsv.s: adjustfindhsv.cpp.s
+box.s: box.cpp.s
 
-.PHONY : adjustfindhsv.s
+.PHONY : box.s
 
 # target to generate assembly for a file
-adjustfindhsv.cpp.s:
-	cd /home/ssc/C++work/box_detect/build && $(MAKE) -f src/CMakeFiles/adjust.dir/build.make src/CMakeFiles/adjust.dir/adjustfindhsv.cpp.s
-.PHONY : adjustfindhsv.cpp.s
+box.cpp.s:
+	cd /home/ssc/C++work/box_detect/build && $(MAKE) -f src/CMakeFiles/hello.dir/build.make src/CMakeFiles/hello.dir/box.cpp.s
+.PHONY : box.cpp.s
 
 main.o: main.cpp.o
 
@@ -251,33 +179,6 @@ main.cpp.s:
 	cd /home/ssc/C++work/box_detect/build && $(MAKE) -f src/CMakeFiles/hello.dir/build.make src/CMakeFiles/hello.dir/main.cpp.s
 .PHONY : main.cpp.s
 
-savepicfromcap.o: savepicfromcap.cpp.o
-
-.PHONY : savepicfromcap.o
-
-# target to build an object file
-savepicfromcap.cpp.o:
-	cd /home/ssc/C++work/box_detect/build && $(MAKE) -f src/CMakeFiles/savecap.dir/build.make src/CMakeFiles/savecap.dir/savepicfromcap.cpp.o
-.PHONY : savepicfromcap.cpp.o
-
-savepicfromcap.i: savepicfromcap.cpp.i
-
-.PHONY : savepicfromcap.i
-
-# target to preprocess a source file
-savepicfromcap.cpp.i:
-	cd /home/ssc/C++work/box_detect/build && $(MAKE) -f src/CMakeFiles/savecap.dir/build.make src/CMakeFiles/savecap.dir/savepicfromcap.cpp.i
-.PHONY : savepicfromcap.cpp.i
-
-savepicfromcap.s: savepicfromcap.cpp.s
-
-.PHONY : savepicfromcap.s
-
-# target to generate assembly for a file
-savepicfromcap.cpp.s:
-	cd /home/ssc/C++work/box_detect/build && $(MAKE) -f src/CMakeFiles/savecap.dir/build.make src/CMakeFiles/savecap.dir/savepicfromcap.cpp.s
-.PHONY : savepicfromcap.cpp.s
-
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -287,21 +188,12 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... hello"
-	@echo "... adjust"
-	@echo "... savecap"
-	@echo "... Shi_Tomasi"
-	@echo "... Shi_Tomasi.o"
-	@echo "... Shi_Tomasi.i"
-	@echo "... Shi_Tomasi.s"
-	@echo "... adjustfindhsv.o"
-	@echo "... adjustfindhsv.i"
-	@echo "... adjustfindhsv.s"
+	@echo "... box.o"
+	@echo "... box.i"
+	@echo "... box.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
-	@echo "... savepicfromcap.o"
-	@echo "... savepicfromcap.i"
-	@echo "... savepicfromcap.s"
 .PHONY : help
 
 

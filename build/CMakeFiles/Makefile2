@@ -69,17 +69,11 @@ CMAKE_BINARY_DIR = /home/ssc/C++work/box_detect/build
 
 # Convenience name for "all" pass in the directory.
 src/all: src/CMakeFiles/hello.dir/all
-src/all: src/CMakeFiles/adjust.dir/all
-src/all: src/CMakeFiles/savecap.dir/all
-src/all: src/CMakeFiles/Shi_Tomasi.dir/all
 
 .PHONY : src/all
 
 # Convenience name for "clean" pass in the directory.
 src/clean: src/CMakeFiles/hello.dir/clean
-src/clean: src/CMakeFiles/adjust.dir/clean
-src/clean: src/CMakeFiles/savecap.dir/clean
-src/clean: src/CMakeFiles/Shi_Tomasi.dir/clean
 
 .PHONY : src/clean
 
@@ -95,7 +89,7 @@ src/preinstall:
 src/CMakeFiles/hello.dir/all:
 	$(MAKE) -f src/CMakeFiles/hello.dir/build.make src/CMakeFiles/hello.dir/depend
 	$(MAKE) -f src/CMakeFiles/hello.dir/build.make src/CMakeFiles/hello.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/ssc/C++work/box_detect/build/CMakeFiles --progress-num=5,6 "Built target hello"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/ssc/C++work/box_detect/build/CMakeFiles --progress-num=5,6,7 "Built target hello"
 .PHONY : src/CMakeFiles/hello.dir/all
 
 # Include target in all.
@@ -105,7 +99,7 @@ all: src/CMakeFiles/hello.dir/all
 
 # Build rule for subdir invocation for target.
 src/CMakeFiles/hello.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/ssc/C++work/box_detect/build/CMakeFiles 2
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/ssc/C++work/box_detect/build/CMakeFiles 3
 	$(MAKE) -f CMakeFiles/Makefile2 src/CMakeFiles/hello.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/ssc/C++work/box_detect/build/CMakeFiles 0
 .PHONY : src/CMakeFiles/hello.dir/rule
@@ -126,113 +120,135 @@ clean: src/CMakeFiles/hello.dir/clean
 .PHONY : clean
 
 #=============================================================================
-# Target rules for target src/CMakeFiles/adjust.dir
+# Directory level rules for directory unity_test
+
+# Convenience name for "all" pass in the directory.
+unity_test/all: unity_test/CMakeFiles/adjust.dir/all
+unity_test/all: unity_test/CMakeFiles/savecap.dir/all
+unity_test/all: unity_test/CMakeFiles/Shi_Tomasi.dir/all
+
+.PHONY : unity_test/all
+
+# Convenience name for "clean" pass in the directory.
+unity_test/clean: unity_test/CMakeFiles/adjust.dir/clean
+unity_test/clean: unity_test/CMakeFiles/savecap.dir/clean
+unity_test/clean: unity_test/CMakeFiles/Shi_Tomasi.dir/clean
+
+.PHONY : unity_test/clean
+
+# Convenience name for "preinstall" pass in the directory.
+unity_test/preinstall:
+
+.PHONY : unity_test/preinstall
+
+#=============================================================================
+# Target rules for target unity_test/CMakeFiles/adjust.dir
 
 # All Build rule for target.
-src/CMakeFiles/adjust.dir/all:
-	$(MAKE) -f src/CMakeFiles/adjust.dir/build.make src/CMakeFiles/adjust.dir/depend
-	$(MAKE) -f src/CMakeFiles/adjust.dir/build.make src/CMakeFiles/adjust.dir/build
+unity_test/CMakeFiles/adjust.dir/all:
+	$(MAKE) -f unity_test/CMakeFiles/adjust.dir/build.make unity_test/CMakeFiles/adjust.dir/depend
+	$(MAKE) -f unity_test/CMakeFiles/adjust.dir/build.make unity_test/CMakeFiles/adjust.dir/build
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/ssc/C++work/box_detect/build/CMakeFiles --progress-num=3,4 "Built target adjust"
-.PHONY : src/CMakeFiles/adjust.dir/all
+.PHONY : unity_test/CMakeFiles/adjust.dir/all
 
 # Include target in all.
-all: src/CMakeFiles/adjust.dir/all
+all: unity_test/CMakeFiles/adjust.dir/all
 
 .PHONY : all
 
 # Build rule for subdir invocation for target.
-src/CMakeFiles/adjust.dir/rule: cmake_check_build_system
+unity_test/CMakeFiles/adjust.dir/rule: cmake_check_build_system
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/ssc/C++work/box_detect/build/CMakeFiles 2
-	$(MAKE) -f CMakeFiles/Makefile2 src/CMakeFiles/adjust.dir/all
+	$(MAKE) -f CMakeFiles/Makefile2 unity_test/CMakeFiles/adjust.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/ssc/C++work/box_detect/build/CMakeFiles 0
-.PHONY : src/CMakeFiles/adjust.dir/rule
+.PHONY : unity_test/CMakeFiles/adjust.dir/rule
 
 # Convenience name for target.
-adjust: src/CMakeFiles/adjust.dir/rule
+adjust: unity_test/CMakeFiles/adjust.dir/rule
 
 .PHONY : adjust
 
 # clean rule for target.
-src/CMakeFiles/adjust.dir/clean:
-	$(MAKE) -f src/CMakeFiles/adjust.dir/build.make src/CMakeFiles/adjust.dir/clean
-.PHONY : src/CMakeFiles/adjust.dir/clean
+unity_test/CMakeFiles/adjust.dir/clean:
+	$(MAKE) -f unity_test/CMakeFiles/adjust.dir/build.make unity_test/CMakeFiles/adjust.dir/clean
+.PHONY : unity_test/CMakeFiles/adjust.dir/clean
 
 # clean rule for target.
-clean: src/CMakeFiles/adjust.dir/clean
+clean: unity_test/CMakeFiles/adjust.dir/clean
 
 .PHONY : clean
 
 #=============================================================================
-# Target rules for target src/CMakeFiles/savecap.dir
+# Target rules for target unity_test/CMakeFiles/savecap.dir
 
 # All Build rule for target.
-src/CMakeFiles/savecap.dir/all:
-	$(MAKE) -f src/CMakeFiles/savecap.dir/build.make src/CMakeFiles/savecap.dir/depend
-	$(MAKE) -f src/CMakeFiles/savecap.dir/build.make src/CMakeFiles/savecap.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/ssc/C++work/box_detect/build/CMakeFiles --progress-num=7,8 "Built target savecap"
-.PHONY : src/CMakeFiles/savecap.dir/all
+unity_test/CMakeFiles/savecap.dir/all:
+	$(MAKE) -f unity_test/CMakeFiles/savecap.dir/build.make unity_test/CMakeFiles/savecap.dir/depend
+	$(MAKE) -f unity_test/CMakeFiles/savecap.dir/build.make unity_test/CMakeFiles/savecap.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/ssc/C++work/box_detect/build/CMakeFiles --progress-num=8,9 "Built target savecap"
+.PHONY : unity_test/CMakeFiles/savecap.dir/all
 
 # Include target in all.
-all: src/CMakeFiles/savecap.dir/all
+all: unity_test/CMakeFiles/savecap.dir/all
 
 .PHONY : all
 
 # Build rule for subdir invocation for target.
-src/CMakeFiles/savecap.dir/rule: cmake_check_build_system
+unity_test/CMakeFiles/savecap.dir/rule: cmake_check_build_system
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/ssc/C++work/box_detect/build/CMakeFiles 2
-	$(MAKE) -f CMakeFiles/Makefile2 src/CMakeFiles/savecap.dir/all
+	$(MAKE) -f CMakeFiles/Makefile2 unity_test/CMakeFiles/savecap.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/ssc/C++work/box_detect/build/CMakeFiles 0
-.PHONY : src/CMakeFiles/savecap.dir/rule
+.PHONY : unity_test/CMakeFiles/savecap.dir/rule
 
 # Convenience name for target.
-savecap: src/CMakeFiles/savecap.dir/rule
+savecap: unity_test/CMakeFiles/savecap.dir/rule
 
 .PHONY : savecap
 
 # clean rule for target.
-src/CMakeFiles/savecap.dir/clean:
-	$(MAKE) -f src/CMakeFiles/savecap.dir/build.make src/CMakeFiles/savecap.dir/clean
-.PHONY : src/CMakeFiles/savecap.dir/clean
+unity_test/CMakeFiles/savecap.dir/clean:
+	$(MAKE) -f unity_test/CMakeFiles/savecap.dir/build.make unity_test/CMakeFiles/savecap.dir/clean
+.PHONY : unity_test/CMakeFiles/savecap.dir/clean
 
 # clean rule for target.
-clean: src/CMakeFiles/savecap.dir/clean
+clean: unity_test/CMakeFiles/savecap.dir/clean
 
 .PHONY : clean
 
 #=============================================================================
-# Target rules for target src/CMakeFiles/Shi_Tomasi.dir
+# Target rules for target unity_test/CMakeFiles/Shi_Tomasi.dir
 
 # All Build rule for target.
-src/CMakeFiles/Shi_Tomasi.dir/all:
-	$(MAKE) -f src/CMakeFiles/Shi_Tomasi.dir/build.make src/CMakeFiles/Shi_Tomasi.dir/depend
-	$(MAKE) -f src/CMakeFiles/Shi_Tomasi.dir/build.make src/CMakeFiles/Shi_Tomasi.dir/build
+unity_test/CMakeFiles/Shi_Tomasi.dir/all:
+	$(MAKE) -f unity_test/CMakeFiles/Shi_Tomasi.dir/build.make unity_test/CMakeFiles/Shi_Tomasi.dir/depend
+	$(MAKE) -f unity_test/CMakeFiles/Shi_Tomasi.dir/build.make unity_test/CMakeFiles/Shi_Tomasi.dir/build
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/ssc/C++work/box_detect/build/CMakeFiles --progress-num=1,2 "Built target Shi_Tomasi"
-.PHONY : src/CMakeFiles/Shi_Tomasi.dir/all
+.PHONY : unity_test/CMakeFiles/Shi_Tomasi.dir/all
 
 # Include target in all.
-all: src/CMakeFiles/Shi_Tomasi.dir/all
+all: unity_test/CMakeFiles/Shi_Tomasi.dir/all
 
 .PHONY : all
 
 # Build rule for subdir invocation for target.
-src/CMakeFiles/Shi_Tomasi.dir/rule: cmake_check_build_system
+unity_test/CMakeFiles/Shi_Tomasi.dir/rule: cmake_check_build_system
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/ssc/C++work/box_detect/build/CMakeFiles 2
-	$(MAKE) -f CMakeFiles/Makefile2 src/CMakeFiles/Shi_Tomasi.dir/all
+	$(MAKE) -f CMakeFiles/Makefile2 unity_test/CMakeFiles/Shi_Tomasi.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/ssc/C++work/box_detect/build/CMakeFiles 0
-.PHONY : src/CMakeFiles/Shi_Tomasi.dir/rule
+.PHONY : unity_test/CMakeFiles/Shi_Tomasi.dir/rule
 
 # Convenience name for target.
-Shi_Tomasi: src/CMakeFiles/Shi_Tomasi.dir/rule
+Shi_Tomasi: unity_test/CMakeFiles/Shi_Tomasi.dir/rule
 
 .PHONY : Shi_Tomasi
 
 # clean rule for target.
-src/CMakeFiles/Shi_Tomasi.dir/clean:
-	$(MAKE) -f src/CMakeFiles/Shi_Tomasi.dir/build.make src/CMakeFiles/Shi_Tomasi.dir/clean
-.PHONY : src/CMakeFiles/Shi_Tomasi.dir/clean
+unity_test/CMakeFiles/Shi_Tomasi.dir/clean:
+	$(MAKE) -f unity_test/CMakeFiles/Shi_Tomasi.dir/build.make unity_test/CMakeFiles/Shi_Tomasi.dir/clean
+.PHONY : unity_test/CMakeFiles/Shi_Tomasi.dir/clean
 
 # clean rule for target.
-clean: src/CMakeFiles/Shi_Tomasi.dir/clean
+clean: unity_test/CMakeFiles/Shi_Tomasi.dir/clean
 
 .PHONY : clean
 

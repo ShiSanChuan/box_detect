@@ -133,7 +133,7 @@ adjust: cmake_check_build_system
 
 # fast build rule for target.
 adjust/fast:
-	$(MAKE) -f src/CMakeFiles/adjust.dir/build.make src/CMakeFiles/adjust.dir/build
+	$(MAKE) -f unity_test/CMakeFiles/adjust.dir/build.make unity_test/CMakeFiles/adjust.dir/build
 .PHONY : adjust/fast
 
 #=============================================================================
@@ -146,7 +146,7 @@ savecap: cmake_check_build_system
 
 # fast build rule for target.
 savecap/fast:
-	$(MAKE) -f src/CMakeFiles/savecap.dir/build.make src/CMakeFiles/savecap.dir/build
+	$(MAKE) -f unity_test/CMakeFiles/savecap.dir/build.make unity_test/CMakeFiles/savecap.dir/build
 .PHONY : savecap/fast
 
 #=============================================================================
@@ -159,7 +159,7 @@ Shi_Tomasi: cmake_check_build_system
 
 # fast build rule for target.
 Shi_Tomasi/fast:
-	$(MAKE) -f src/CMakeFiles/Shi_Tomasi.dir/build.make src/CMakeFiles/Shi_Tomasi.dir/build
+	$(MAKE) -f unity_test/CMakeFiles/Shi_Tomasi.dir/build.make unity_test/CMakeFiles/Shi_Tomasi.dir/build
 .PHONY : Shi_Tomasi/fast
 
 # Help Target
