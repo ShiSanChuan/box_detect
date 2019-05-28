@@ -43,15 +43,15 @@ void goodFeaturesToTrack_Demo(int, void*)
     //初始化 Shi-Tomasi algorithm的一些参数
     vector<Point2f> corners;
     double qualityLevel = 0.01;
-    double minDistance = 10;
+    double minDistance = 5;
     int blockSize = 3;
     bool useHarrisDetector = false;
     double k = 0.04;
 
     //给原图做一次备份
-    Mat copy;
+    Mat copy,copy2;
     copy = src.clone();
-
+    copy2 = src.clone();
     // 角点检测
     goodFeaturesToTrack(src_gray,corners,maxCorners,qualityLevel,minDistance,Mat(),blockSize,useHarrisDetector,k);
 
@@ -64,6 +64,19 @@ void goodFeaturesToTrack_Demo(int, void*)
             rng.uniform(0, 255)), -1, 8, 0);
     }
 
+    cv::TermCriteria criteria = cv::TermCriteria(
+                    cv::TermCriteria::MAX_ITER + cv::TermCriteria::EPS,
+                    40,
+                    0.01);
+    cv::cornerSubPix(src_gray, corners, cv::Size(5, 5), cv::Size(-1, -1), criteria);
+    for (int i = 0; i < corners.size(); i++)
+    {
+        circle(copy2, corners[i], r, Scalar(rng.uniform(0, 255), rng.uniform(0, 255),
+            rng.uniform(0, 255)), -1, 8, 0);
+    }
+
+
     namedWindow(source_window, CV_WINDOW_AUTOSIZE);
     imshow(source_window, copy);
+    imshow(source_window+"2", copy2);
 }

@@ -57,7 +57,7 @@ cv::Scalar Red_max(360,255,231);
 cv::Scalar Green_min(22,37,22);
 cv::Scalar Green_max(208,255,238);
 
-double pointdistance(cv::Point2f &P1,cv::Point2f &P2){
+double pointdistance(cv::Point &P1,cv::Point &P2){
 	double x_dis=P2.x-P1.x;
 	double y_dis=P2.y-P1.y;
 	return std::sqrt(x_dis*x_dis+y_dis*y_dis);
@@ -88,7 +88,7 @@ float distCoeffs[5]={-0.3914272330750649, 0.136309583256524, -0.0008870578061134
 cv::Mat CM=cv::Mat(3,3,CV_32FC1,cameraMatrix);
 cv::Mat D=cv::Mat(1,5,CV_32FC1,distCoeffs);
 
-void drawboxContours(cv::Mat & img,std::vector<cv::Point2f> &polygon,Box::type _type){
+void drawboxContours(cv::Mat & img,std::vector<cv::Point> &polygon,Box::type _type){
 	std::vector<cv::Point2f> image_points;
 	std::vector<cv::Point3f> qurapoints;
 
@@ -148,6 +148,33 @@ void drawboxContours(cv::Mat & img,std::vector<cv::Point2f> &polygon,Box::type _
 void drwaAixs(){
 
 }
+void fixpoint(cv::Mat &img,std::vector<cv::Point> &point){
+	int maxCorners=10;
+	double qualityLevel = 0.1;
+	double minDistance = 10;
+	int blockSize = 6;
+	bool useHarrisDetector = false;
+    double k = 0.04;
+    int dd=15;
+	for(int i=0;i<4;i++){
+		std::vector<cv::Point> corners;
+		cv::Mat imgROI(img(cv::Rect(point[i].x-dd,point[i].y-dd,dd*2,dd*2)));
+		cv::cvtColor(imgROI, imgROI,cv::COLOR_RGB2GRAY);
+		goodFeaturesToTrack(imgROI,corners,maxCorners,qualityLevel,minDistance,cv::Mat(),blockSize,useHarrisDetector,k);
+		
+		for (int j = 0; j < corners.size(); j++)
+    	{
+    		corners[j].x+=point[i].x-dd;
+			corners[j].y+=point[i].y-dd;
+			circle(img, corners[j], 2, cv::Scalar(255,0,0), -1, 8, 0);
+		}
+		std::cout<<corners.size()<<std::endl;
+		std::cout<<"x "<<point[i].x<<" y"<<point[i].y<<"->"<<" x "<<corners[0].x<<" y"<<corners[0].y<<std::endl;
+		if(pointdistance(point[i],corners[0])<8)
+			point[i]=corners[0];
+	}
+}
+
 cv::Scalar GetColor(cv::Mat imgROI){
 	std::vector<cv::Mat> bgr_planes;
 	cv::split(imgROI, bgr_planes);
@@ -214,59 +241,58 @@ int main(int argc, const char** argv){
 
 	cv::Mat hsv,midImage,finImage;
 	cv::Mat kernel;
-	cv::Mat bak_img(img);
 	cv::Mat BLACK_img(img.size(),CV_8UC3,cv::Scalar(255,255,255));
 	cv::fastNlMeansDenoisingColored(img, img);
+	cv::Mat bak_img=img.clone();
 	cv::Canny(img, midImage, 10, 250, 3);
-	{
-	    std::vector<std::vector<cv::Point> > contours;
-		std::vector<cv::Vec4i> hierarchy;
-		cv::findContours(midImage,contours, hierarchy,CV_RETR_LIST,cv::CHAIN_APPROX_SIMPLE);
-		cv::drawContours(BLACK_img, contours,-1, cv::Scalar(0,0,0),3);
-	}
+
+    std::vector<std::vector<cv::Point> > contours;
+	std::vector<cv::Vec4i> hierarchy;
+	cv::findContours(midImage, contours,hierarchy, CV_RETR_LIST , CV_CHAIN_APPROX_SIMPLE);
+	cv::drawContours(BLACK_img, contours, -1, cv::Scalar(0,0,0),3);
    	// kernel = getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(7, 7));
     // morphologyEx(BLACK_img,BLACK_img,cv::MORPH_OPEN  ,kernel);
 
     // kernel = getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(3, 3));
     // morphologyEx(BLACK_img,BLACK_img,cv::MORPH_DILATE  ,kernel);
 
-    cv::cvtColor(BLACK_img, BLACK_img, cv::COLOR_RGB2GRAY);
-	{
-	    std::vector<std::vector<cv::Point> > contours;
-		std::vector<cv::Vec4i> hierarchy;
-		cv::findContours(BLACK_img,contours, hierarchy,CV_RETR_EXTERNAL,CV_CHAIN_APPROX_SIMPLE);
-		for(int i=0;i<static_cast<int>(contours.size());i++){
-			int size=cv::contourArea(contours[i]);
-			std::vector<cv::Point2f> polygon;
-			approxPolyDP(contours[i], polygon, arcLength(contours[i], 1)*0.02, 1);//arcLength(contours[i], 1)*0.02
-    		double area = fabs(contourArea(polygon));
-			if(polygon.size() == 4&&area>2000){
-				std::cout<<"size:"<<size<<" area"<<area<<std::endl;
-				cv::Rect rect=cv::boundingRect(contours[i]);
-				cv::Scalar color=GetColor(bak_img(rect));
-				// cv::drawContours(img, contours,i, cv::Scalar(0,0,0),2);
-				if(Box::BLUE==GetBoxType(color)){
-					std::cout<<"BLUE"<<std::endl;
-				}
-				if(Box::RED==GetBoxType(color)){
-					std::cout<<"RED"<<std::endl;
-				}
-				if(Box::GREEN==GetBoxType(color)){
-					std::cout<<"GREEN"<<std::endl;
-				}
-				for(int i=0;i<4;i++){
-					cv::line(bak_img,polygon[i] , polygon[(i+1)%4],  cv::Scalar(0,0,0),2);
-				}
-				drawboxContours(bak_img, polygon,Box::RED);
-				// cv::imshow("bak_img", bak_img);
-				// cv::waitKey(0);
+	cv::cvtColor(BLACK_img, BLACK_img, cv::COLOR_RGB2GRAY);
+	contours.clear();
+	hierarchy.clear();
+	cv::findContours(BLACK_img, contours,hierarchy, CV_RETR_EXTERNAL , CV_CHAIN_APPROX_SIMPLE);
+
+	for(int i=0;i<static_cast<int>(contours.size());i++){
+		int size=cv::contourArea(contours[i]);
+		std::vector<cv::Point> polygon;
+		approxPolyDP(contours[i], polygon, arcLength(contours[i], 1)*0.02, 1);
+		double area = fabs(contourArea(polygon));
+		if(polygon.size() == 4&&area>2000){
+			std::cout<<"size:"<<size<<" area"<<area<<std::endl;
+			cv::Rect rect=cv::boundingRect(contours[i]);
+			cv::Scalar color=GetColor(bak_img(rect));
+			if(Box::BLUE==GetBoxType(color)){
+				std::cout<<"BLUE"<<std::endl;
+			}
+			if(Box::RED==GetBoxType(color)){
+				std::cout<<"RED"<<std::endl;
+			}
+			if(Box::GREEN==GetBoxType(color)){
+				std::cout<<"GREEN"<<std::endl;
+			}
+			// for(int i=0;i<4;i++){
+			// 	cv::line(img,polygon[i] , polygon[(i+1)%4],  cv::Scalar(0,255,0),2);
+			// }
+			fixpoint(bak_img,polygon);
+			for(int i=0;i<4;i++){
+				cv::line(img,polygon[i] , polygon[(i+1)%4],  cv::Scalar(0,0,0),2);
 			}
 		}
 	}
-
 	cv::imshow("demo", img);
+	cv::imwrite("../../demo.jpg", img);
 	cv::imshow("midimge", midImage);
 	cv::imshow("black_img", BLACK_img);
+	cv::imshow("bak_img", bak_img);
     cv::waitKey(0);
 
 	// }
