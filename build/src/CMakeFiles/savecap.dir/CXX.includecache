@@ -1,0 +1,16 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/ssc/C++work/box_detect/src/savepicfromcap.cpp
+opencv2/opencv.hpp
+-
+iostream
+-
+string
+-
+

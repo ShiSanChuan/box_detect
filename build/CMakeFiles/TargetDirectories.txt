@@ -1,0 +1,8 @@
+/home/ssc/C++work/box_detect/build/CMakeFiles/rebuild_cache.dir
+/home/ssc/C++work/box_detect/build/CMakeFiles/edit_cache.dir
+/home/ssc/C++work/box_detect/build/src/CMakeFiles/rebuild_cache.dir
+/home/ssc/C++work/box_detect/build/src/CMakeFiles/edit_cache.dir
+/home/ssc/C++work/box_detect/build/src/CMakeFiles/hello.dir
+/home/ssc/C++work/box_detect/build/src/CMakeFiles/adjust.dir
+/home/ssc/C++work/box_detect/build/src/CMakeFiles/savecap.dir
+/home/ssc/C++work/box_detect/build/src/CMakeFiles/Shi_Tomasi.dir

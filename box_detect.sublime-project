@@ -1,0 +1,52 @@
+{
+	"build_systems":
+	[
+		{
+			"file_regex": "(.+[^:]):(\\d+):(\\d+): (?:fatal )?((?:error|warning): .+)$",
+			"name": "box_detect (Linux)",
+			"shell_cmd": "make -j8",
+			"syntax": "Packages/CMakeBuilder/Syntax/Make.sublime-syntax",
+			"variants":
+			[
+				{
+					"name": "clean",
+					"shell_cmd": "make -j8 clean"
+				},
+				{
+					"name": "rebuild_cache",
+					"shell_cmd": "make -j8 rebuild_cache"
+				},
+				{
+					"name": "hello",
+					"shell_cmd": "make -j8 hello"
+				},
+				{
+					"name": "adjust",
+					"shell_cmd": "make -j8 adjust"
+				},
+				{
+					"name": "savecap",
+					"shell_cmd": "make -j8 savecap"
+				},
+				{
+					"name": "Shi_Tomasi",
+					"shell_cmd": "make -j8 Shi_Tomasi"
+				}
+			],
+			"working_dir": "${project_path}/build"
+		}
+	],
+	"folders":
+	[
+		{
+			"path": "."
+		}
+	],
+	"settings":
+	{
+		"cmake":
+		{
+			"build_folder": "${project_path}/build"
+		}
+	}
+}
