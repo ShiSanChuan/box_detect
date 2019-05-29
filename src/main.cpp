@@ -41,11 +41,10 @@ int main(int argc, const char** argv){
 	// 	cap>>clone_img;
 	// 	img=clone_img.clone(); 
 	// 	cv::undistort(clone_img, img,CM,D);
-
 	detect detecter;
 	detecter.Getaxis(img);
 	cv::imshow("img" ,img);
 	cv::waitKey(0);
-	
+
     return 0;
 }

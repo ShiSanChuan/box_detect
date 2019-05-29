@@ -44,7 +44,8 @@ type detect::GetBoxType(cv::Scalar Color){
 	long long disG=G*G+Color.val[0]*Color.val[0]+Color.val[2]*Color.val[2];
 	long long disR=R*R+Color.val[0]*Color.val[0]+Color.val[1]*Color.val[1];
 	long long min=std::min(disB,std::min(disG, disR));
-	// if(min<25000)return None;
+	if(min>30000)return None;
+	std::cout<<"CC"<<min<<std::endl;
 	if(min==disR)return RED;
 	if(min==disG)return GREEN;
 	if(min==disB)return BLUE;
@@ -66,6 +67,8 @@ void detect::fixpoint(cv::Mat &img,std::vector<cv::Point> &point,int dd){
     double k = 0.04;
 	for(int i=0;i<4;i++){
 		std::vector<cv::Point> corners;
+		if(point[i].x<dd||point[i].y<dd||point[i].y+dd<img.rows||point[i].x+dd<img.cols)
+			continue;
 		cv::Mat imgROI(img(cv::Rect(point[i].x-dd,point[i].y-dd,dd*2,dd*2)));
 		cv::cvtColor(imgROI, imgROI,cv::COLOR_RGB2GRAY);
 		goodFeaturesToTrack(imgROI,corners,maxCorners,qualityLevel,minDistance,cv::Mat(),blockSize,useHarrisDetector,k);
@@ -133,7 +136,7 @@ void detect::drawboxContours(cv::Mat & img,std::vector<cv::Point> &polygon,type 
 
 	cv::solvePnP(qurapoints, _polygon, CM, D, rotation_vector, translation_vector);
 	std::cout<<"rotation:"<<std::endl<<rotation_vector<<std::endl;
-	std::cout<<"translation"<<std::endl<<translation_vector<<std::endl;
+	std::cout<<"translation:"<<std::endl<<translation_vector<<std::endl;
 	std::vector<cv::Point3d> end_point3D;
 	std::vector<cv::Point2d> end_point2D;
 	double high= -20;
@@ -238,20 +241,19 @@ int detect::Getaxis(cv::Mat &img){
 		if(polygon.size() == 4&&area>1000&&area<200000&&
 			std::abs(angle(polygon[1] ,polygon[3], polygon[0])-
 				angle(polygon[1] ,polygon[3], polygon[2]))<0.4){
-			std::cout<<"size:"<<size<<" area"<<area<<std::endl;
+			// std::cout<<"size:"<<size<<" area"<<area<<std::endl;
 
 			cv::Rect rect=cv::boundingRect(contours[i]);
 			cv::Scalar color=GetColor(bak_img(cv::Rect(rect.x+rect.width/4,rect.y+rect.height/4,
 			rect.width/2,rect.height/2)));
-			if(BLUE==GetBoxType(color)){
+			type boxtype=GetBoxType(color);
+			if(BLUE==boxtype){
 				std::cout<<"BLUE"<<std::endl;
-			}
-			if(RED==GetBoxType(color)){
+			}else if(RED==boxtype){
 				std::cout<<"RED"<<std::endl;
-			}
-			if(GREEN==GetBoxType(color)){
+			}else if(GREEN==boxtype){
 				std::cout<<"GREEN"<<std::endl;
-			}
+			}else continue;
 			fixpoint(bak_img,polygon);
 			for(int i=0;i<4;i++){
 				cv::line(img,polygon[i] , polygon[(i+1)%4],  cv::Scalar(0,0,0),2);
