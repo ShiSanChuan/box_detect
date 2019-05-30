@@ -7,6 +7,8 @@ enum type{
 	BLUE,
 	None
 };
+extern cv::Mat CM;
+extern cv::Mat D;
 
 class detect{
 private:

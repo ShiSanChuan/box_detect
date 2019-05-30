@@ -4,10 +4,10 @@
 #include <random>
 #include <detect.h>
 
-static float cameraMatrix[3][3]={480.0456075942316, 0, 328.4887103828126, 0, 478.8971079559076, 249.130831872676, 0, 0, 1};
-static float distCoeffs[5]={-0.3914272330750649, 0.136309583256524, -0.0008870578061134298, 0.0005048983403991557, 0};
-static cv::Mat CM=cv::Mat(3,3,CV_32FC1,cameraMatrix);
-static cv::Mat D=cv::Mat(1,5,CV_32FC1,distCoeffs);
+float cameraMatrix[3][3]={480.0456075942316, 0, 328.4887103828126, 0, 478.8971079559076, 249.130831872676, 0, 0, 1};
+float distCoeffs[5]={-0.3914272330750649, 0.136309583256524, -0.0008870578061134298, 0.0005048983403991557, 0};
+cv::Mat CM=cv::Mat(3,3,CV_32FC1,cameraMatrix);
+cv::Mat D=cv::Mat(1,5,CV_32FC1,distCoeffs);
 
 cv::Scalar detect::GetColor(cv::Mat imgROI,int size){
 	cv::Scalar color(0,0,0);
@@ -163,7 +163,8 @@ void detect::drawboxContours(cv::Mat & img,std::vector<cv::Point> &polygon,type 
 
 int detect::Getaxis(cv::Mat &img){
 	cv::Mat BLACK_img(img.size(),CV_8UC1,cv::Scalar(255));
-	cv::fastNlMeansDenoisingColored(img, img);
+	// cv::fastNlMeansDenoisingColored(img, img);
+	cv::GaussianBlur(img, img, cv::Size(3,3), 3,3);
 	cv::Mat bak_img=img.clone();
 	cv::Mat gray;
 
@@ -228,7 +229,7 @@ int detect::Getaxis(cv::Mat &img){
 	std::vector<cv::Vec4i> hierarchy;
 	cv::findContours(BLACK_img, contours,hierarchy, CV_RETR_LIST , CV_CHAIN_APPROX_SIMPLE);
 
-	// drawContours(img,contours,-1,cv::Scalar(0,255,0),1,8,hierarchy);
+	drawContours(img,contours,-1,cv::Scalar(0,255,0),1,8,hierarchy);
     
 	for(int i=0;i<static_cast<int>(contours.size());i++){
 		int size=cv::contourArea(contours[i]);
@@ -237,10 +238,10 @@ int detect::Getaxis(cv::Mat &img){
 		// approxPolyDP(cv::Mat(hull), polygon, arcLength(contours[i], 1)*0.02, 1);//
 		approxPolyDP(contours[i], polygon, arcLength(contours[i], 1)*0.02, 1);//
 		double area = fabs(contourArea(polygon));
-		// std::cout<<"poly "<<polygon.size()<<"size "<<size<<" area"<<area<<std::endl;
-		if(polygon.size() == 4&&area>1000&&area<200000&&
-			std::abs(angle(polygon[1] ,polygon[3], polygon[0])-
-				angle(polygon[1] ,polygon[3], polygon[2]))<0.4){
+		if(polygon.size() == 4&&area>1000&&area<200000){
+			// std::cout<<"poly "<<polygon.size()<<"size "<<size<<" area"<<area<<std::endl;
+			if(std::abs(angle(polygon[1] ,polygon[3], polygon[0])-
+				angle(polygon[1] ,polygon[3], polygon[2]))>0.4)continue;
 			// std::cout<<"size:"<<size<<" area"<<area<<std::endl;
 
 			cv::Rect rect=cv::boundingRect(contours[i]);
@@ -258,7 +259,7 @@ int detect::Getaxis(cv::Mat &img){
 			for(int i=0;i<4;i++){
 				cv::line(img,polygon[i] , polygon[(i+1)%4],  cv::Scalar(0,0,0),2);
 			}
-			drawboxContours(img,polygon,GetBoxType(color));
+			drawboxContours(img,polygon,boxtype);
 
 			auto mm=cv::moments(polygon,false);
 			cv::circle(img, cv::Point(mm.m10/mm.m00,mm.m01/mm.m00), 6,  cv::Scalar(0,0,0));
