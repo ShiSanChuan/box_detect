@@ -17,8 +17,8 @@
 					"shell_cmd": "make -j8 rebuild_cache"
 				},
 				{
-					"name": "hello",
-					"shell_cmd": "make -j8 hello"
+					"name": "box",
+					"shell_cmd": "make -j8 box"
 				},
 				{
 					"name": "adjust",

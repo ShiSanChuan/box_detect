@@ -2,7 +2,7 @@
 #include <iostream>
 #include <future>
 #include <random>
-#include <detect.h>
+#include "detect.h"
 
 float cameraMatrix[3][3]={480.0456075942316, 0, 328.4887103828126, 0, 478.8971079559076, 249.130831872676, 0, 0, 1};
 float distCoeffs[5]={-0.3914272330750649, 0.136309583256524, -0.0008870578061134298, 0.0005048983403991557, 0};
@@ -86,20 +86,37 @@ void detect::fixpoint(cv::Mat &img,std::vector<cv::Point> &point,int dd){
 }
 
 void detect::AdjustContrastAndLight(cv::Mat & src,double alpha,double beta){
+	float MaxCG=15;
+	int k=7;
+	cv::Mat meanlocal,varlocal,meanGlobal,varGlobal,gray;
+	cv::cvtColor(src, gray, CV_BGR2GRAY);
+	cv::blur(src, meanlocal, cv::Size(k,k));
+	cv::Mat highfreq=src-meanlocal;
+	varlocal=((cv::Mat)(highfreq.mul(highfreq))).clone();
+	cv::blur(varlocal, varlocal, cv::Size(k,k));
+	varlocal.convertTo(varlocal, CV_32FC3);
 	for(int row=0;row<src.rows;row++){
 		for(int col=0;col<src.cols;col++)
 			if(src.channels()==3){
-				float b=src.at<cv::Vec3b>(row,col)[0];
-				float g=src.at<cv::Vec3b>(row,col)[1];
-				float r=src.at<cv::Vec3b>(row,col)[2];
-
-				src.at<cv::Vec3b>(row,col)[0]=cv::saturate_cast<unsigned char>(b*alpha + beta);
-				src.at<cv::Vec3b>(row,col)[1]=cv::saturate_cast<unsigned char>(g*alpha + beta);
-				src.at<cv::Vec3b>(row,col)[2]=cv::saturate_cast<unsigned char>(r*alpha + beta);
-			}else if(src.channels()==1){
-				src.at<unsigned>(row,col)=cv::saturate_cast<unsigned char>(src.at<unsigned char>(row,col)*alpha+beta);
+				for(int i=0;i<3;i++)
+				varlocal.at<cv::Vec3f>(row,col)[i]=(float)std::sqrt(varlocal.at<cv::Vec3f>(row,col)[i]);
 			}
 	}
+	cv::meanStdDev(gray, meanGlobal, varGlobal);
+	cv::Mat gainArr=0.5* meanGlobal/varlocal;
+	for(int row=0;row<src.rows;row++){
+		for(int col=0;col<src.cols;col++)
+			if(src.channels()==3){
+				for(int i=0;i<3;i++)
+					if(gainArr.at<cv::Vec3f>(row,col)[i]>MaxCG)
+						gainArr.at<cv::Vec3f>(row,col)[i]=MaxCG;				
+			}
+	}
+	gainArr.convertTo(gainArr, CV_8UC3);
+	gainArr=((cv::Mat)gainArr.mul(highfreq)).clone();
+	
+	src=meanlocal+ gainArr ;
+
 }
 
 void detect::drawboxContours(cv::Mat & img,std::vector<cv::Point> &polygon,type _type){
@@ -160,21 +177,20 @@ void detect::drawboxContours(cv::Mat & img,std::vector<cv::Point> &polygon,type 
 	}
 }
 
-
 int detect::Getaxis(cv::Mat &img){
 	cv::Mat BLACK_img(img.size(),CV_8UC1,cv::Scalar(255));
 	// cv::fastNlMeansDenoisingColored(img, img);
-	cv::GaussianBlur(img, img, cv::Size(3,3), 3,3);
 	cv::Mat bak_img=img.clone();
 	cv::Mat gray;
-
-	cv::cvtColor(img, gray, CV_BGR2GRAY);
-	cv::Mat grad_x,grad_y;
-	cv::Sobel(gray,grad_x,CV_16S,1, 0,3,1,0);
-	cv::Sobel(gray,grad_y,CV_16S,0, 1,3,1,0);
-	convertScaleAbs(grad_x,grad_x);
-    convertScaleAbs(grad_y,grad_y);
-    addWeighted(grad_x, 0.5, grad_y, 0.5, 0, gray);
+	AdjustContrastAndLight(bak_img,0.8,-10);
+	// medianBlur(bak_img,bak_img,3);
+	cv::cvtColor(bak_img, gray, CV_BGR2GRAY);
+	// cv::Mat grad_x,grad_y;
+	// cv::Sobel(gray,grad_x,CV_16S,1, 0,3,1,0);
+	// cv::Sobel(gray,grad_y,CV_16S,0, 1,3,1,0);
+	// convertScaleAbs(grad_x,grad_x);
+ //    convertScaleAbs(grad_y,grad_y);
+ //    addWeighted(grad_x, 0.5, grad_y, 0.5, 0, gray);
 
 	auto GB1=std::async(std::launch::async,[&gray,&BLACK_img](int k){
 		cv::Mat midimg;
@@ -196,7 +212,7 @@ int detect::Getaxis(cv::Mat &img){
 		// kernel = getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(3, 3));
   //   	morphologyEx(BLACK_img,BLACK_img,cv::MORPH_ERODE  ,kernel);
 		std::vector<std::vector<cv::Point> > contours;
-		std::vector<cv::Vec4i> hierarchy;
+		std::vector<cv::Vec4i> hierarchy;  
 		cv::findContours(midimg, contours,hierarchy, CV_RETR_LIST , CV_CHAIN_APPROX_SIMPLE);
 		cv::drawContours(BLACK_img, contours, -1, cv::Scalar(0),3);
 	},5);
@@ -221,8 +237,9 @@ int detect::Getaxis(cv::Mat &img){
 	medianBlur(BLACK_img,BLACK_img,3);
 
 	cv::Mat kernel;
-	kernel = getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(4, 4));
+	kernel = getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(3, 3));
 	morphologyEx(BLACK_img,BLACK_img,cv::MORPH_CLOSE  ,kernel);
+
     morphologyEx(BLACK_img,BLACK_img,cv::MORPH_DILATE  ,kernel);
 
 	std::vector<std::vector<cv::Point> > contours;
@@ -236,10 +253,11 @@ int detect::Getaxis(cv::Mat &img){
 		std::vector<cv::Point> polygon,hull;
 		// convexHull(contours[i],hull);
 		// approxPolyDP(cv::Mat(hull), polygon, arcLength(contours[i], 1)*0.02, 1);//
-		approxPolyDP(contours[i], polygon, arcLength(contours[i], 1)*0.02, 1);//
+		approxPolyDP(contours[i], polygon, arcLength(contours[i], 1)*0.04, 1);//
 		double area = fabs(contourArea(polygon));
+		// if(polygon.size()==4)std::cout<<"poly "<<polygon.size()<<"size "<<size<<" area"<<area<<std::endl;
 		if(polygon.size() == 4&&area>1000&&area<200000){
-			// std::cout<<"poly "<<polygon.size()<<"size "<<size<<" area"<<area<<std::endl;
+			
 			if(std::abs(angle(polygon[1] ,polygon[3], polygon[0])-
 				angle(polygon[1] ,polygon[3], polygon[2]))>0.4)continue;
 			// std::cout<<"size:"<<size<<" area"<<area<<std::endl;

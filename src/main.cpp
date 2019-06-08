@@ -5,7 +5,8 @@
 #include <future>
 #include <algorithm>
 #include <random>
-#include <detect.h>
+#include "detect.h"
+#include "realsense.h"
 //30 20 20 red
 //60 20 20 green
 //120 20 20 blue
@@ -32,26 +33,29 @@ cv::Scalar Green_min(22,37,22);
 cv::Scalar Green_max(208,255,238);
 
 int main(int argc, const char** argv){
-	cv::Mat img,clone_img;
+	cv::Mat img,clone_img,depth_img;
 	detect detecter;
 
-	// img=cv::imread("../../cap3.jpg");;
- // 	detecter.Getaxis(img);
-	// cv::imshow("img" ,img);
-	// cv::waitKey(0);
-	// return 0;
+	img=cv::imread("../../cap4.jpg");;
+ 	detecter.Getaxis(img);
+	cv::imshow("img" ,img);
+	cv::waitKey(0);
+	return 0;
 	
-	cv::VideoCapture cap;
-	cap.open(1);
+	// cv::VideoCapture cap;
+	// cap.open(1);
+	realsense realsense;
+	realsense.init();
 	double t=0.;
 	std::string FPS="FPS";
 
 	while(1){
 		t=(double)cv::getTickCount();
-			cap>>clone_img;
-			
-			img=clone_img.clone(); 
-			cv::undistort(clone_img, img,CM,D);
+			// cap>>clone_img;
+			realsense.get(img,depth_img);
+
+			// img=clone_img.clone(); 
+			// cv::undistort(clone_img, img,CM,D);
 		// 	
 		
 		detecter.Getaxis(img);

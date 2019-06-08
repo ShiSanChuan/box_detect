@@ -1,7 +1,9 @@
 find_package(OpenCV  REQUIRED)
 
-aux_source_directory(. DIR_SRCS)
-add_executable(hello ${DIR_SRCS})
+INCLUDE_DIRECTORIES(./includes)
 
-target_link_libraries(hello  ${OpenCV_LIBS} pthread)
+aux_source_directory(. DIR_SRCS)
+add_executable(box ${DIR_SRCS})
+
+target_link_libraries(box  ${OpenCV_LIBS} pthread librealsense2.so)
 

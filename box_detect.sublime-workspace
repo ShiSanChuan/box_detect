@@ -4,6 +4,178 @@
 		"selected_items":
 		[
 			[
+				"rea",
+				"realsense"
+			],
+			[
+				"alig",
+				"align_to_depth"
+			],
+			[
+				"dep",
+				"depth_img"
+			],
+			[
+				"pthread_un",
+				"pthread_mutex_unlock\tint pthread_mutex_unlock(pthread_mutex_t *__mutex)"
+			],
+			[
+				"im",
+				"imgMutex\tpthread_mutex_t imgMutex"
+			],
+			[
+				"pthread_mu",
+				"pthread_mutex_lock\tint pthread_mutex_lock(pthread_mutex_t *__mutex)"
+			],
+			[
+				"get",
+				"get_data\tconst void * get_data() const"
+			],
+			[
+				"get_",
+				"get_depth_frame\trs2::depth_frame get_depth_frame() const"
+			],
+			[
+				"ge",
+				"get_color_frame\trs2::video_frame get_color_frame() const"
+			],
+			[
+				"read",
+				"read_func"
+			],
+			[
+				"realse",
+				"realsense.h\t/home/ssc/C++work/box_detect/includes"
+			],
+			[
+				"mean",
+				"meanStdDev\tvoid meanStdDev(InputArray src, OutputArray mean, OutputArray stddev)"
+			],
+			[
+				"CV_8UC",
+				"CV_8UC3\tCV_8UC3"
+			],
+			[
+				"val",
+				"varlocal"
+			],
+			[
+				"Vec3",
+				"Vec3f\tVec3f"
+			],
+			[
+				"s",
+				"size\tcv::Mat::MSize size"
+			],
+			[
+				"re",
+				"rect"
+			],
+			[
+				"pol",
+				"polygon"
+			],
+			[
+				"Bl",
+				"BLACK_img\tcv::Mat BLACK_img"
+			],
+			[
+				"dete",
+				"detect.h\t/home/ssc/C++work/box_detect/includes"
+			],
+			[
+				"_D",
+				"_DETECT_H"
+			],
+			[
+				"img",
+				"imgROI"
+			],
+			[
+				"norm",
+				"normal_distribution\tnormal_distribution<>"
+			],
+			[
+				"row",
+				"rows\tint rows"
+			],
+			[
+				"col",
+				"cols\tint cols"
+			],
+			[
+				"Gb",
+				"GB3\tstd::future<void> GB3"
+			],
+			[
+				"fu",
+				"future\tfuture<typename _Res>"
+			],
+			[
+				"pri",
+				"private"
+			],
+			[
+				"_",
+				"_rotation"
+			],
+			[
+				"SC",
+				"Scalar\tScalar"
+			],
+			[
+				"Poin",
+				"Point2f\tPoint2f"
+			],
+			[
+				"end",
+				"end_axis"
+			],
+			[
+				"min",
+				"min_index\tint min_index"
+			],
+			[
+				"di",
+				"distance"
+			],
+			[
+				"rec",
+				"rectangle\tvoid rectangle(cv::Mat &img, Rect rec, const Scalar &color)"
+			],
+			[
+				"p",
+				"point"
+			],
+			[
+				"pl",
+				"polygon"
+			],
+			[
+				"ba",
+				"bak_img\tcv::Mat bak_img"
+			],
+			[
+				"max",
+				"maxCorners"
+			],
+			[
+				"po",
+				"point1\tcv::Point point1"
+			],
+			[
+				"B",
+				"BLUE"
+			],
+			[
+				"R",
+				"RED"
+			],
+			[
+				"dis",
+				"disB"
+			],
+			[
 				"dra",
 				"drawContours\tvoid drawContours(InputOutputArray image, InputArrayOfArrays contours, int contourIdx, const Scalar &color)"
 			],
@@ -18,10 +190,6 @@
 			[
 				"thre",
 				"threshold\tdouble threshold(InputArray src, OutputArray dst, double thresh, double maxval, int type)"
-			],
-			[
-				"im",
-				"imread\tcv::Mat imread(const cv::String &filename)"
 			],
 			[
 				"Quaternion",
@@ -78,10 +246,6 @@
 			[
 				"enc",
 				"encode\tbool encode()"
-			],
-			[
-				"s",
-				"size\tsize_type size() const"
 			],
 			[
 				"it",
@@ -216,10 +380,6 @@
 				"struct\tstruct"
 			],
 			[
-				"pri",
-				"private\tprivate"
-			],
-			[
 				"event",
 				"event2/event.h\t/usr/local/include"
 			],
@@ -248,18 +408,6 @@
 				"main\tmain()"
 			],
 			[
-				"re",
-				"result"
-			],
-			[
-				"_",
-				"_chrom_num"
-			],
-			[
-				"row",
-				"row\tcv::Mat row(int y) const"
-			],
-			[
 				"da",
 				"dataPoint"
 			],
@@ -274,10 +422,6 @@
 			[
 				"add",
 				"addValue\tcvplot::Series & addValue(const std::vector<float> &values)"
-			],
-			[
-				"dis",
-				"dist"
 			],
 			[
 				"gen",
@@ -322,10 +466,6 @@
 			[
 				"sq",
 				"sqrt\tdouble sqrt(double __x)"
-			],
-			[
-				"Poin",
-				"Point2d\tPoint2d"
 			],
 			[
 				"CV",
@@ -374,169 +514,89 @@
 			[
 				"in",
 				"in_imp"
-			],
-			[
-				"in_",
-				"in_imp_b\tcv::Mat in_imp_b"
-			],
-			[
-				"col",
-				"cols\tint cols"
-			],
-			[
-				"ro",
-				"rowRange\tcv::Mat rowRange(int startrow, int endrow) const"
-			],
-			[
-				"sl",
-				"solve\tvoid solve(float (*_fun)(...))"
-			],
-			[
-				"pa",
-				"para_num"
-			],
-			[
-				"dem",
-				"demo4\tvoid demo4(std::function<float (...)> fun)"
-			],
-			[
-				"va",
-				"va_end\tva_end(ap)"
-			],
-			[
-				"va_",
-				"va_start\tva_start(ap, param)"
-			],
-			[
-				"obj",
-				"objV2\tstd::vector<float> & objV2"
-			],
-			[
-				"ob",
-				"objV2"
-			],
-			[
-				"cv",
-				"CV_32FC1"
-			],
-			[
-				"tem",
-				"tem1"
-			],
-			[
-				"bes",
-				"best2"
-			],
-			[
-				"de",
-				"demo1_2.png\tw:800 h:400"
-			],
-			[
-				"reco",
-				"recode_rank_index\tstd::vector<std::pair<int, float> > recode_rank_index"
-			],
-			[
-				"max",
-				"max_index\tint max_index"
-			],
-			[
-				"ost",
-				"osty"
-			],
-			[
-				"ch",
-				"chrom_num"
-			],
-			[
-				"best",
-				"best\tstd::pair<float, float> best"
-			],
-			[
-				"se",
-				"setValue\tcvplot::Series & setValue(const std::vector<Point2> &values)"
-			],
-			[
-				"setVa",
-				"setValue\tcvplot::Series & setValue(const std::vector<Point2> &values)"
-			],
-			[
-				"serc",
-				"search_max"
-			],
-			[
-				"ser",
-				"search_min"
-			],
-			[
-				"p_",
-				"p_mut"
-			],
-			[
-				"gr",
-				"Green\tconst cvplot::Color Green"
-			],
-			[
-				"c",
-				"color\tcvplot::Color color() const"
-			],
-			[
-				"resi",
-				"resizeWindow\tvoid resizeWindow(const std::string &view, int width, int height)"
-			],
-			[
-				"ab",
-				"abs\tfloat abs(float __x)"
-			],
-			[
-				"Size",
-				"Size\tSize"
-			],
-			[
-				"setW",
-				"setWindowTitle\tvoid setWindowTitle(const std::string &view, const std::string &title)"
-			],
-			[
-				"pop",
-				"Population\tcv::Mat Population"
-			],
-			[
-				"for",
-				"for_each\t_Function for_each(_InputIterator __first, _InputIterator __last, _Function __f)"
-			],
-			[
-				"randu",
-				"randu\tvoid randu(InputOutputArray dst, InputArray low, InputArray high)"
-			],
-			[
-				"m",
-				"main\tmain()"
-			],
-			[
-				"com",
-				"command_buffer\tuchar * command_buffer"
 			]
 		]
 	},
 	"buffers":
 	[
 		{
-			"file": "src/main.cpp",
+			"file": "src/box.cpp",
 			"settings":
 			{
-				"buffer_size": 7639,
+				"buffer_size": 485,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"contents": "ssc@ssc2:~/C++work/box_detect/src$                                                              \nssc@ssc2:~/C++work/box_detect/src$ cd ../build/src/                                             \nssc@ssc2:~/C++work/box_detect/build/src$ ./he                                                   \nbash: ./he: 没 有 那 个 文 件 或 目 录                                                                   \nssc@ssc2:~/C++work/box_detect/build/src$ ls                                                     \nadjust  CMakeFiles  cmake_install.cmake  hello  HSV_inRange.jpg  Makefile  savecap              \nssc@ssc2:~/C++work/box_detect/build/src$ ls                                                     \nadjust  CMakeFiles  cmake_install.cmake  hello  HSV_inRange.jpg  Makefile  savecap              \nssc@ssc2:~/C++work/box_detect/build/src$ ll                                                     \n总 用 量  532                                                                                      \ndrwxr-xr-x 3 ssc ssc   4096 5月   27 12:22 ./                                                    \ndrwxr-xr-x 5 ssc ssc   4096 5月   27 12:22 ../                                                   \n-rw-r--r-- 1 ssc ssc  99384 5月   21 16:47 adjust                                                \ndrwxr-xr-x 5 ssc ssc   4096 5月   27 12:22 CMakeFiles/                                           \n-rw-r--r-- 1 ssc ssc   1130 5月   17 20:04 cmake_install.cmake                                   \n-rw-r--r-- 1 ssc ssc 302800 5月   27 11:34 hello                                                 \n-rw-r--r-- 1 ssc ssc  18001 5月   27 09:36 HSV_inRange.jpg                                       \n-rw-r--r-- 1 ssc ssc   8488 5月   21 16:16 Makefile                                              \n-rw-r--r-- 1 ssc ssc  89240 5月   21 16:48 savecap                                               \nssc@ssc2:~/C++work/box_detect/build/src$                                                        \nssc@ssc2:~/C++work/box_detect/build/src$ cd ..                                                  \nssc@ssc2:~/C++work/box_detect/build$ cd src/                                                    \nssc@ssc2:~/C++work/box_detect/build/src$ ls                                                     \nadjust  CMakeFiles  cmake_install.cmake  hello  Makefile  savecap                               \nssc@ssc2:~/C++work/box_detect/build/src$ ./hello                                                \nssc@ssc2:~/C++work/box_detect/build/src$ ./hello                                                \nssc@ssc2:~/C++work/box_detect/build/src$ ./hello                                                \nssc@ssc2:~/C++work/box_detect/build/src$ ./hello                                                \nssc@ssc2:~/C++work/box_detect/build/src$ ./hello                                                \nssc@ssc2:~/C++work/box_detect/build/src$ ./hello                                                \nssc@ssc2:~/C++work/box_detect/build/src$ ./hello                                                \nssc@ssc2:~/C++work/box_detect/build/src$ ./hello                                                \nssc@ssc2:~/C++work/box_detect/build/src$ ./hello                                                \nssc@ssc2:~/C++work/box_detect/build/src$ ./hello                                                \nssc@ssc2:~/C++work/box_detect/build/src$                                                        \n                                                                                                \n                                                                                                \n                                                                                                \n                                                                                                \n                                                                                                \n",
+			"file": "src/realsense.cpp",
 			"settings":
 			{
-				"buffer_size": 3880,
-				"line_ending": "Unix",
-				"name": "Terminal (bash)",
-				"read_only": true,
-				"scratch": true
+				"buffer_size": 2506,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "CMakeLists.txt",
+			"settings":
+			{
+				"buffer_size": 253,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "unity_test/CMakeLists.txt",
+			"settings":
+			{
+				"buffer_size": 364,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/CMakeLists.txt",
+			"settings":
+			{
+				"buffer_size": 168,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "includes/realsense.h",
+			"settings":
+			{
+				"buffer_size": 651,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/detect.cpp",
+			"settings":
+			{
+				"buffer_size": 10091,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/main.cpp",
+			"settings":
+			{
+				"buffer_size": 1317,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "includes/detect.h",
+			"settings":
+			{
+				"buffer_size": 762,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
 			}
 		},
 		{
@@ -546,6 +606,26 @@
 				"buffer_size": 12121,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/home/ssc/C++work/doushicaji/libHardWare/usbCapture/src/realsense.cpp",
+			"settings":
+			{
+				"buffer_size": 5421,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "ssc@ss                                 \n:~/C++                                 \nrk/box                                 \netect/                                 \nc$                                     \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n                                       \n",
+			"settings":
+			{
+				"buffer_size": 2120,
+				"line_ending": "Unix",
+				"name": "Terminal (bash)",
+				"read_only": true,
+				"scratch": true
 			}
 		}
 	],
@@ -575,18 +655,94 @@
 				"box_detect (Linux)",
 				""
 			]
+		],
+		[
+			[
+				[
+					"box_detect (Linux)",
+					""
+				],
+				[
+					"box_detect (Linux)",
+					"clean"
+				],
+				[
+					"box_detect (Linux)",
+					"rebuild_cache"
+				],
+				[
+					"box_detect (Linux)",
+					"hello"
+				],
+				[
+					"box_detect (Linux)",
+					"adjust"
+				],
+				[
+					"box_detect (Linux)",
+					"savecap"
+				],
+				[
+					"box_detect (Linux)",
+					"Shi_Tomasi"
+				]
+			],
+			[
+				"box_detect (Linux)",
+				""
+			]
 		]
 	],
 	"build_varint": "",
 	"command_palette":
 	{
-		"height": 409.0,
-		"last_filter": "",
+		"height": 400.0,
+		"last_filter": "gitp",
 		"selected_items":
 		[
 			[
+				"gitp",
+				"Git: Pull"
+			],
+			[
+				"git pull",
+				"Git: Pull"
+			],
+			[
+				"push",
+				"Git: Push"
+			],
+			[
+				"com",
+				"Git: Commit"
+			],
+			[
+				"add",
+				"Git: Add All"
+			],
+			[
+				"comm",
+				"Git: Commit"
+			],
+			[
+				"gitgutter",
+				"GitGutter: Compare Against Branch"
+			],
+			[
+				"pu",
+				"Git: Pull"
+			],
+			[
 				"bash",
 				"Terminal View: Open Bash Terminal"
+			],
+			[
+				"git ad",
+				"Git: Add All"
+			],
+			[
+				"pus",
+				"Git: Push"
 			],
 			[
 				"bas",
@@ -629,10 +785,6 @@
 				"Git: Commit"
 			],
 			[
-				"git ad",
-				"Git: Add All"
-			],
-			[
 				"git add",
 				"Git: Add All"
 			],
@@ -665,11 +817,11 @@
 				"EasyClangComplete: Settings"
 			]
 		],
-		"width": 602.0
+		"width": 601.0
 	},
 	"console":
 	{
-		"height": 0.0,
+		"height": 402.0,
 		"history":
 		[
 		]
@@ -685,13 +837,37 @@
 	},
 	"expanded_folders":
 	[
-		"/home/ssc/C++work/box_detect"
+		"/home/ssc/C++work/box_detect",
+		"/home/ssc/C++work/box_detect/includes",
+		"/home/ssc/C++work/box_detect/src",
+		"/home/ssc/C++work/box_detect/unity_test"
 	],
 	"file_history":
 	[
 		"/home/ssc/C++work/box_detect/CMakeLists.txt",
-		"/home/ssc/C++work/box_detect/src/adjustfindhsv.cpp",
 		"/home/ssc/C++work/box_detect/src/CMakeLists.txt",
+		"/home/ssc/C++work/box_detect/README.md",
+		"/home/ssc/C++work/box_detect/src/realsense.cpp",
+		"/usr/include/librealsense2/rs.hpp",
+		"/home/ssc/.config/sublime-text-3/Packages/User/C++.sublime-build",
+		"/home/ssc/.config/sublime-text-3/Packages/User/C++.sublime-settings",
+		"/usr/include/opencv2/core/types_c.h",
+		"/usr/include/opencv2/core/core.hpp",
+		"/home/ssc/C++work/box_detect/21XBP.jpg",
+		"/home/ssc/C++work/box_detect/src/detect.cpp",
+		"/home/ssc/C++work/box_detect/src/main.cpp",
+		"/home/ssc/C++work/box_detect/unity_test/intrangdetect.cpp",
+		"/home/ssc/C++work/box_detect/src/Shi_Tomasi.cpp",
+		"/media/ssc/Ubuntu 16.0/box_detect/src/main.cpp",
+		"/home/ssc/C++work/box_detect/unity_test/savepicfromcap.cpp",
+		"/home/ssc/C++work/box_detect/.gitignore",
+		"/home/ssc/C++work/box_detect/unity_test/CMakeLists.txt",
+		"/home/ssc/C++work/2019huaweiSDK_C++/CMakeLists.txt",
+		"/home/ssc/C++work/GeneticAlgorithm/src/GAlib/CMakeLists.txt",
+		"/home/ssc/C++work/GeneticAlgorithm/README.md",
+		"/home/ssc/C++work/box_detect/src/savepicfromcap.cpp",
+		"/home/ssc/C++work/opencvtest/async.cpp",
+		"/home/ssc/C++work/box_detect/src/adjustfindhsv.cpp",
 		"/home/ssc/C++work/RemortCamerConnect_ARM-PC/TCP/src/mytcp.cpp",
 		"/home/ssc/C++work/RemortCamerConnect_ARM-PC/camer_pi_TCP.cpp",
 		"/home/ssc/C++work/Octopus_learing/CMakeLists.txt",
@@ -733,7 +909,6 @@
 		"/home/ssc/.cache/.fr-1M0XA9/chapter10/main.m",
 		"/home/ssc/C++work/GeneticAlgorithm/src/CMakeLists.txt",
 		"/home/ssc/C++work/GeneticAlgorithm/includes/demo.h",
-		"/home/ssc/.config/sublime-text-3/Packages/User/C++.sublime-build",
 		"/home/ssc/C++work/GeneticAlgorithm/src/GAlib/E_GA.cpp",
 		"/home/ssc/C++work/GeneticAlgorithm/build/src/point.txt",
 		"/home/ssc/C++work/darknet/python/darknet.py",
@@ -748,13 +923,11 @@
 		"/home/ssc/C++work/GeneticAlgorithm/includes/GA.h",
 		"/home/ssc/C++work/GeneticAlgorithm/CMakeLists.txt",
 		"/home/ssc/C++work/GeneticAlgorithm/src/demo.cpp",
-		"/home/ssc/C++work/GeneticAlgorithm/README.md",
 		"/home/ssc/.config/sublime-text-3/Packages/User/SublimeGDB.sublime-settings",
 		"/home/ssc/.config/sublime-text-3/Packages/SublimeGDB/SublimeGDB.sublime-settings",
 		"/usr/include/c++/5/bits/stl_algo.h",
 		"/home/ssc/C++work/GeneticAlgorithm/includes/internal.h",
 		"/home/ssc/C++work/GeneticAlgorithm/src/GAlib/GA.h",
-		"/home/ssc/C++work/GeneticAlgorithm/src/GAlib/CMakeLists.txt",
 		"/home/ssc/C++work/GeneticAlgorithm/includes/window.h",
 		"/home/ssc/C++work/GeneticAlgorithm/GeneticAlgorithmByC++.sublime-project",
 		"/home/ssc/C++work/GeneticAlgorithmByC++/src/cvplotlib/figure.cc",
@@ -791,6 +964,39 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"align_to",
+			"alig",
+			"static",
+			"imgMutex",
+			"EXIT_SUCCESS",
+			"isColorImgUpdate",
+			"start",
+			"Mat ",
+			"Mat",
+			"AdjustContrastAndLight",
+			"bak_img",
+			"60000",
+			"250",
+			"isParallel",
+			"Box",
+			"getVector",
+			"img",
+			"Put",
+			"img",
+			"Box",
+			"0",
+			";\n",
+			"GetColor",
+			"source_window",
+			"area",
+			"src",
+			"20",
+			"10",
+			"WhichDir",
+			";\n",
+			"maxCosinelimte",
+			"Light",
+			"Contrast"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -808,198 +1014,373 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 1,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "src/main.cpp",
+					"file": "src/box.cpp",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 7639,
+						"buffer_size": 485,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								3272,
-								3272
+								149,
+								149
+							],
+							[
+								391,
+								391
 							]
 						],
 						"settings":
 						{
-							"function_name_status_row": -1,
-							"git_gutter_is_enabled": false,
-							"spell_check": true,
+							"function_name_status_row": 14,
+							"git_gutter_is_enabled": true,
 							"syntax": "Packages/C++/C++.sublime-syntax"
 						},
 						"translation.x": 0.0,
-						"translation.y": 1512.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "src/realsense.cpp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2506,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								86,
+								86
+							]
+						],
+						"settings":
+						{
+							"function_name_status_row": 4,
+							"git_gutter_is_enabled": true,
+							"syntax": "Packages/C++/C++.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
 					"type": "text"
 				},
 				{
-					"buffer": 1,
+					"buffer": 2,
+					"file": "CMakeLists.txt",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 3880,
+						"buffer_size": 253,
 						"regions":
 						{
-							"10,42":
-							{
-								"flags": 272,
-								"regions":
-								[
-									[
-										1012,
-										1013
-									]
-								],
-								"scope": "terminalview.black_blue"
-							},
-							"11,42":
-							{
-								"flags": 272,
-								"regions":
-								[
-									[
-										1109,
-										1111
-									]
-								],
-								"scope": "terminalview.black_blue"
-							},
-							"13,42":
-							{
-								"flags": 272,
-								"regions":
-								[
-									[
-										1303,
-										1313
-									]
-								],
-								"scope": "terminalview.black_blue"
-							},
-							"16,42":
-							{
-								"flags": 272,
-								"regions":
-								[
-									[
-										1594,
-										1609
-									]
-								],
-								"scope": "terminalview.black_magenta"
-							},
-							"23,0":
-							{
-								"flags": 272,
-								"regions":
-								[
-									[
-										2231,
-										2237
-									]
-								],
-								"scope": "terminalview.black_green"
-							},
-							"23,41":
-							{
-								"flags": 272,
-								"regions":
-								[
-									[
-										2272,
-										2277
-									]
-								],
-								"scope": "terminalview.black_green"
-							},
-							"23,58":
-							{
-								"flags": 272,
-								"regions":
-								[
-									[
-										2289,
-										2296
-									]
-								],
-								"scope": "terminalview.black_green"
-							},
-							"23,8":
-							{
-								"flags": 272,
-								"regions":
-								[
-									[
-										2239,
-										2249
-									]
-								],
-								"scope": "terminalview.black_blue"
-							},
-							"5,48":
-							{
-								"flags": 272,
-								"regions":
-								[
-									[
-										533,
-										548
-									]
-								],
-								"scope": "terminalview.black_magenta"
-							},
-							"5,8":
-							{
-								"flags": 272,
-								"regions":
-								[
-									[
-										493,
-										503
-									]
-								],
-								"scope": "terminalview.black_blue"
-							},
-							"7,48":
-							{
-								"flags": 272,
-								"regions":
-								[
-									[
-										727,
-										742
-									]
-								],
-								"scope": "terminalview.black_magenta"
-							},
-							"7,8":
-							{
-								"flags": 272,
-								"regions":
-								[
-									[
-										687,
-										697
-									]
-								],
-								"scope": "terminalview.black_blue"
-							}
 						},
 						"selection":
 						[
 							[
-								3339,
-								3339
+								132,
+								132
+							]
+						],
+						"settings":
+						{
+							"function_name_status_row": 5,
+							"git_gutter_is_enabled": true,
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 7,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "unity_test/CMakeLists.txt",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 364,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								364,
+								364
+							]
+						],
+						"settings":
+						{
+							"function_name_status_row": 13,
+							"git_gutter_is_enabled": true,
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "src/CMakeLists.txt",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 168,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								98,
+								98
+							]
+						],
+						"settings":
+						{
+							"function_name_status_row": 5,
+							"git_gutter_is_enabled": true,
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "includes/realsense.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 651,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								120,
+								120
+							]
+						],
+						"settings":
+						{
+							"function_name_status_row": 6,
+							"git_gutter_is_enabled": true,
+							"open_with_edit": true,
+							"syntax": "Packages/C++/C++.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "src/detect.cpp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 10091,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								105,
+								105
+							]
+						],
+						"settings":
+						{
+							"function_name_status_row": 4,
+							"git_gutter_is_enabled": true,
+							"syntax": "Packages/C++/C++.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "src/main.cpp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1317,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								260,
+								260
+							]
+						],
+						"settings":
+						{
+							"function_name_status_row": 13,
+							"git_gutter_is_enabled": true,
+							"syntax": "Packages/C++/C++.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 8,
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "includes/detect.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 762,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								158,
+								158
+							]
+						],
+						"settings":
+						{
+							"auto_name": "",
+							"function_name_status_row": 12,
+							"git_gutter_is_enabled": true,
+							"syntax": "Packages/C++/C++.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				}
+			]
+		},
+		{
+			"selected": 1,
+			"sheets":
+			[
+				{
+					"buffer": 9,
+					"file": "/home/ssc/C++work/opencvtest/intrangdetect.cpp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 12121,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								5136,
+								5136
+							]
+						],
+						"settings":
+						{
+							"function_name_status_row": 143,
+							"git_gutter_is_enabled": false,
+							"syntax": "Packages/C++/C++.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 1620.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 11,
+					"type": "text"
+				},
+				{
+					"buffer": 10,
+					"file": "/home/ssc/C++work/doushicaji/libHardWare/usbCapture/src/realsense.cpp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 5421,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								171,
+								171
+							]
+						],
+						"settings":
+						{
+							"function_name_status_row": 7,
+							"git_gutter_is_enabled": true,
+							"syntax": "Packages/C++/C++.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 9,
+					"type": "text"
+				},
+				{
+					"buffer": 11,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2120,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								163,
+								163
 							]
 						],
 						"settings":
@@ -1012,7 +1393,7 @@
 							"draw_centered": false,
 							"draw_indent_guides": false,
 							"draw_white_space": "none",
-							"function_name_status_row": 34,
+							"function_name_status_row": 4,
 							"git_gutter_is_enabled": false,
 							"gutter": false,
 							"highlight_line": false,
@@ -1029,8 +1410,8 @@
 							},
 							"terminal_view_last_cursor_pos":
 							[
-								34,
-								41
+								4,
+								3
 							],
 							"word_wrap": false
 						},
@@ -1038,44 +1419,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
-					"type": "text"
-				}
-			]
-		},
-		{
-			"selected": 0,
-			"sheets":
-			[
-				{
-					"buffer": 2,
-					"file": "/home/ssc/C++work/opencvtest/intrangdetect.cpp",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 12121,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								3501,
-								3501
-							]
-						],
-						"settings":
-						{
-							"function_name_status_row": 102,
-							"git_gutter_is_enabled": false,
-							"syntax": "Packages/C++/C++.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 1719.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
+					"stack_index": 10,
 					"type": "text"
 				}
 			]
@@ -1109,7 +1453,7 @@
 		"cols":
 		[
 			0.0,
-			0.583714567306,
+			0.479030409094,
 			1.0
 		],
 		"rows":
@@ -1121,21 +1465,29 @@
 	"menu_visible": true,
 	"output.exec":
 	{
-		"height": 245.0
+		"height": 191.0
 	},
 	"output.find_results":
 	{
 		"height": 0.0
 	},
+	"output.git":
+	{
+		"height": 116.0
+	},
 	"output.mdpopups":
 	{
 		"height": 0.0
+	},
+	"output.unsaved_changes":
+	{
+		"height": 116.0
 	},
 	"pinned_build_system": "box_detect (Linux)",
 	"project": "box_detect.sublime-project",
 	"replace":
 	{
-		"height": 53.7037037037
+		"height": 82.0
 	},
 	"save_all_on_build": true,
 	"select_file":
@@ -1177,7 +1529,7 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 137.0,
+	"side_bar_width": 212.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{
