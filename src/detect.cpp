@@ -118,13 +118,21 @@ void detect::AdjustContrastAndLight(cv::Mat & src,double alpha,double beta){
 	src=meanlocal+ gainArr ;
 
 }
+void detect::moveLightDiff(cv::Mat &img,int radius){
+	cv::Mat img_tmp=img.clone();
+	cv::Mat mask=cv::Mat::zeros(radius*2, radius*2, CV_8U);
+	cv::erode(img_tmp, img_tmp, mask);
+	cv::dilate(img_tmp, img_tmp, mask);
+	img=img-img_tmp;
+}
 
 void detect::drawboxContours(cv::Mat & img,std::vector<cv::Point> &polygon,type _type){
 	std::vector<cv::Point2f> image_points;
 	std::vector<cv::Point3f> qurapoints;
+	if(polygon.size()<4)return;
 
 	std::vector<cv::Point2f> _polygon;
-	for(int i=0;i<4;i++)//bug
+	for(int i=0;i<static_cast<int>(polygon.size());i++)//bug
 		_polygon.push_back(polygon[i]);
 
 	cv::Scalar color;
@@ -176,7 +184,79 @@ void detect::drawboxContours(cv::Mat & img,std::vector<cv::Point> &polygon,type 
 		cv::line(img,end_point2D[i],end_point2D[(i+1)%4],color,2);
 	}
 }
+//h s v
+const  cv::Scalar detect::Red_min(134,59./255,80./255);
+const cv::Scalar detect::Red_max(360,255./255,231./255);
 
+const cv::Scalar detect::Green_min(22,37./255,22./255);
+const cv::Scalar detect::Green_max(208,255./255,238./255);
+
+int detect::Getaxisbyhav(cv::Mat &img){
+	cv::Mat hsv,bgr;
+	img.convertTo(bgr, CV_32FC3, 1.0 / 255, 0);
+	cvtColor(bgr, hsv, cv::COLOR_BGR2HSV);
+
+	
+
+	auto func=[&](cv::Scalar min,cv::Scalar max){
+		cv::Mat dst = cv::Mat::zeros(hsv.size(), CV_32FC3);
+		cv::Mat mask;
+		inRange(hsv, min, max, mask);
+		for (int r = 0; r < bgr.rows; r++){
+			for (int c = 0; c < bgr.cols; c++){
+				if (mask.at<uchar>(r, c) == 255){
+					dst.at<cv::Vec3f>(r, c) = bgr.at<cv::Vec3f>(r, c);
+				}
+			}
+		}
+		dst.convertTo(dst, CV_8UC3, 255.0, 0);
+		medianBlur(dst,dst,3);
+		// cv::cvtColor(dst, dst, CV_BGR2GRAY);
+		cv::Canny(dst, dst, 10, 250,3);
+		std::vector<std::vector<cv::Point> > contours;
+		std::vector<cv::Vec4i> hierarchy;
+		cv::findContours(dst, contours,hierarchy, CV_RETR_EXTERNAL , CV_CHAIN_APPROX_SIMPLE);
+		
+		cv::drawContours(img, contours, -1, cv::Scalar(0,0,0),1);
+		
+		for(int i=0;i<static_cast<int>(contours.size());i++){
+			int size=cv::contourArea(contours[i]);
+			if(size<800)continue;
+			std::vector<cv::Point> polygon;
+			approxPolyDP(contours[i], polygon, arcLength(contours[i], 1)*0.04, 1);
+			double area = fabs(contourArea(polygon));
+			if(area<1000||area>20000)continue;
+			if(polygon.size()==6){
+				std::vector<int> len;
+				for(int i=0;i<6;i++)len.push_back(pointdistance(polygon[i], polygon[(i+1)&6]));
+				auto iter=std::max_element(len.begin(), len.end());
+				for(int i=0;i<static_cast<int>(polygon.size());i++){
+					cv::line(img,polygon[i] , polygon[(i+1)%4],  cv::Scalar(255,0,0),3);
+				}
+				// pointdistance
+			}else if(polygon.size()==4){
+				if(std::abs(angle(polygon[1] ,polygon[3], polygon[0])-
+				angle(polygon[1] ,polygon[3], polygon[2]))>0.4)continue;
+				// fixpoint(img,polygon);
+
+			for(int i=0;i<static_cast<int>(polygon.size());i++){
+				cv::line(img,polygon[i] , polygon[(i+1)%4],  cv::Scalar(255,0,0),3);
+			}
+
+				// drawboxContours(img,polygon,boxtype);
+			}
+		}
+
+	};
+
+	auto RED=std::async(std::launch::async,func,Red_min,Red_max);
+	// auto GREEN=std::async(std::launch::async,func,Green_min,Green_max);
+
+	RED.get();
+	// GREEN.get();
+
+	return 0;
+}
 int detect::Getaxis(cv::Mat &img){
 	cv::Mat BLACK_img(img.size(),CV_8UC1,cv::Scalar(255));
 	// cv::fastNlMeansDenoisingColored(img, img);
@@ -191,44 +271,23 @@ int detect::Getaxis(cv::Mat &img){
 	// convertScaleAbs(grad_x,grad_x);
  //    convertScaleAbs(grad_y,grad_y);
  //    addWeighted(grad_x, 0.5, grad_y, 0.5, 0, gray);
+    
+	auto func=[&gray,&BLACK_img](int k){
+		cv::Mat midimg;
+		cv::GaussianBlur(gray, midimg, cv::Size(k,k),k,k);
+		cv::Canny(midimg, midimg, 10, 250,3);
+		// cv::Mat kernel;
+		// kernel = getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(3, 3));
+  //   	morphologyEx(BLACK_img,BLACK_img,cv::MORPH_ERODE  ,kernel);
+		std::vector<std::vector<cv::Point> > contours;
+		std::vector<cv::Vec4i> hierarchy;
+		cv::findContours(midimg, contours,hierarchy, CV_RETR_LIST , CV_CHAIN_APPROX_SIMPLE);
+		cv::drawContours(BLACK_img, contours, -1, cv::Scalar(0),3);
+	};
 
-	auto GB1=std::async(std::launch::async,[&gray,&BLACK_img](int k){
-		cv::Mat midimg;
-		cv::GaussianBlur(gray, midimg, cv::Size(k,k),k,k);
-		cv::Canny(midimg, midimg, 10, 250,3);
-		// cv::Mat kernel;
-		// kernel = getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(3, 3));
-  //   	morphologyEx(BLACK_img,BLACK_img,cv::MORPH_ERODE  ,kernel);
-		std::vector<std::vector<cv::Point> > contours;
-		std::vector<cv::Vec4i> hierarchy;
-		cv::findContours(midimg, contours,hierarchy, CV_RETR_LIST , CV_CHAIN_APPROX_SIMPLE);
-		cv::drawContours(BLACK_img, contours, -1, cv::Scalar(0),3);
-	},3);
-	auto GB2=std::async(std::launch::async,[&gray,&BLACK_img](int k){
-		cv::Mat midimg;
-		cv::GaussianBlur(gray, midimg, cv::Size(k,k),k,k);
-		cv::Canny(midimg, midimg, 10, 250,3);
-		// cv::Mat kernel;
-		// kernel = getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(3, 3));
-  //   	morphologyEx(BLACK_img,BLACK_img,cv::MORPH_ERODE  ,kernel);
-		std::vector<std::vector<cv::Point> > contours;
-		std::vector<cv::Vec4i> hierarchy;  
-		cv::findContours(midimg, contours,hierarchy, CV_RETR_LIST , CV_CHAIN_APPROX_SIMPLE);
-		cv::drawContours(BLACK_img, contours, -1, cv::Scalar(0),3);
-	},5);
-	auto GB3=std::async(std::launch::async,[&gray,&BLACK_img](int k){
-			cv::Mat kernel;
-		cv::Mat midimg;
-		cv::GaussianBlur(gray, midimg, cv::Size(k,k),k,k);
-		cv::Canny(midimg, midimg, 10, 250,3);
-		// cv::Mat kernel;
-		// kernel = getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(3, 3));
-  //   	morphologyEx(BLACK_img,BLACK_img,cv::MORPH_ERODE  ,kernel);
-		std::vector<std::vector<cv::Point> > contours;
-		std::vector<cv::Vec4i> hierarchy;
-		cv::findContours(midimg, contours,hierarchy, CV_RETR_LIST , CV_CHAIN_APPROX_SIMPLE);
-		cv::drawContours(BLACK_img, contours, -1, cv::Scalar(0),3);
-	},7);
+	auto GB1=std::async(std::launch::async,func,3);
+	auto GB2=std::async(std::launch::async,func,5);
+	auto GB3=std::async(std::launch::async,func,7);
 
 	GB1.get();
 	GB2.get();
@@ -250,6 +309,7 @@ int detect::Getaxis(cv::Mat &img){
     
 	for(int i=0;i<static_cast<int>(contours.size());i++){
 		int size=cv::contourArea(contours[i]);
+		if(size<800)continue;
 		std::vector<cv::Point> polygon,hull;
 		// convexHull(contours[i],hull);
 		// approxPolyDP(cv::Mat(hull), polygon, arcLength(contours[i], 1)*0.02, 1);//

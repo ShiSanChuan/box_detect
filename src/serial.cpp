@@ -1,30 +1,13 @@
 #include "serial.h"
-#include <string>
-#include <fcntl.h>
-#include <unistd.h>
-#include <termios.h>
-#include <cstring>
-#// ttyTHS2
-// 
-class serial
-{
-public:
-	serial(std::string dev_name,int baudrate);
-	~serial();
-	
-	size_t send(const char * buf,int len);
-	size_t read(char * buf,int len);
-	bool init();
-	bool close();
-	bool config(int baudrate, char data_bits, char parity_bits,
-                 char stop_bits, bool testForData);
-private:
-	std::string dev_name;
-	int baudrate;
-	int serial_fd;
-};
+
 bool serial::init(){
-	serial_fd=open(dev_name.data(),O_RDWR | O_NOCTTY);
+#ifdef __arm__
+	serial_fd = open(dev_name.data(), O_RDWR | O_NONBLOCK);
+#elif __x86_64__
+	serial_fd = open(dev_name.data(), O_RDWR | O_NOCTTY);
+#else
+	serial_fd = open(dev_name.data(), O_RDWR | O_NOCTTY);
+#endif
 	if(serial_fd<0){
 		printf("can not open device %s\n",dev_name.data());
 		return false;
@@ -41,6 +24,34 @@ bool serial::close(){
 	serial_fd=-1;
 	return true;
 }
+size_t serial::send(const char *buf, int len){
+	if(NULL==buf||len<0)
+		return -1;
+	else
+		return write(serial_fd, buf, len);
+}
+size_t serial::recv(char *buf, int len){
+	if(NULL==buf||len<0)
+		return -1;
+	else
+		return read(serial_fd,buf,len);
+}
+size_t serial::send(std::string &buf){
+	return serial::send(buf.data(),buf.size());
+}
+size_t serial::recv(std::string &buf){
+	memset(recv_buf, 0x0, RECV_SIZE);
+	int ret=serial::recv(recv_buf, RECV_SIZE);
+	buf=std::string(recv_buf);
+	return ret;
+}
+void serial::setdev(std::string _dev_name){
+	dev_name=_dev_name;
+}
+void serial::setbaudrate(int _baudrate){
+	baudrate=_baudrate;
+}
+
 bool serial::config(int baudrate, char data_bits, char parity_bits,
              char stop_bits, bool testForData){
 	int st_baud[] = { B4800,  B9600,   B19200,  B38400,
@@ -118,6 +129,18 @@ bool serial::config(int baudrate, char data_bits, char parity_bits,
 	newtio.c_cflag |= CSTOPB;
 	else
 	newtio.c_cflag &= ~CSTOPB; //8N1 default config
+#if __x86_64__
+	if (testForData)
+	{
+	newtio.c_cc[VTIME] = 8;
+	newtio.c_cc[VMIN]  = 0;
+	}
+	else
+	{
+	newtio.c_cc[VTIME] = 1;
+	newtio.c_cc[VMIN]  = 18;
+	}
+#endif
 	newtio.c_lflag &= ~(ICANON | ECHO | ECHOE | ISIG);
 	newtio.c_oflag &= ~OPOST;
 

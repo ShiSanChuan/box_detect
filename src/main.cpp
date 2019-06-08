@@ -24,43 +24,50 @@ void Quattest(){
 
     std::cout<< Rx<<std::endl;
 }
-
-//h s v
-cv::Scalar Red_min(134,59,80);
-cv::Scalar Red_max(360,255,231);
-
-cv::Scalar Green_min(22,37,22);
-cv::Scalar Green_max(208,255,238);
-
+enum test{
+	IMG,
+	CAMERA,
+	REALSENSE
+};
 int main(int argc, const char** argv){
 	cv::Mat img,clone_img,depth_img;
 	detect detecter;
 
-	img=cv::imread("../../cap4.jpg");;
- 	detecter.Getaxis(img);
-	cv::imshow("img" ,img);
-	cv::waitKey(0);
-	return 0;
-	
-	// cv::VideoCapture cap;
-	// cap.open(1);
+	test ustest;
+	cv::VideoCapture cap;
 	realsense realsense;
-	realsense.init();
+	if(cap.open(1))ustest=CAMERA;
+	else if(realsense.init())ustest=REALSENSE;
+	else ustest=IMG;
+
+	if(ustest==IMG){
+		img=cv::imread("../../cap.jpg");
+		if (!img.data || img.channels() != 3){
+			printf("error img name \n");
+			return -1;
+		}
+		detecter.Getaxisbyhav(img);
+	 	// detecter.Getaxis(img);
+		cv::imshow("img" ,img);
+		cv::waitKey(0);
+		return 0;
+	}
+	
 	double t=0.;
 	std::string FPS="FPS";
 
 	while(1){
 		t=(double)cv::getTickCount();
-			// cap>>clone_img;
-			realsense.get(img,depth_img);
-
-			// img=clone_img.clone(); 
-			// cv::undistort(clone_img, img,CM,D);
-		// 	
-		
-		detecter.Getaxis(img);
-
-
+			
+			if(ustest==REALSENSE)
+				realsense.get(img,depth_img);
+			else{
+				cap>>clone_img;
+				img=clone_img.clone(); 
+				cv::undistort(clone_img, img,CM,D);
+			}
+		// detecter.Getaxis(img);
+		detecter.Getaxisbyhav(img);
 		 t = (double)cv::getTickFrequency()/((double)cv::getTickCount() - t) ;
 
 		 cv::putText(img, FPS+std::to_string(t),cv::Point(5,20), cv::FONT_HERSHEY_SIMPLEX, 1,cv::Scalar(0,0,255) );

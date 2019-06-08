@@ -59,7 +59,7 @@ void callBack(int, void*)
 int main(int argc, char*argv[])
 {
 	//输入图像
-	img = imread("../../cap.jpg");
+	img = imread("../../cap4.jpg");
 	if (!img.data || img.channels() != 3)
 		return -1;
 	imshow(windowName, img);
