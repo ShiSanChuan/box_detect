@@ -42,7 +42,7 @@ int main(int argc, const char** argv){
 	else ustest=IMG;
 
 	if(ustest==IMG){
-		img=cv::imread("../../cap7.jpg");
+		img=cv::imread("../../cap5.jpg");
 		if (!img.data || img.channels() != 3){
 			printf("error img name \n");
 			return -1;
