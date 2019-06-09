@@ -3,13 +3,25 @@
 ## 添加realsense接口，serial接口，分支1.0
 ##添加基于颜色的方块检测方法 ，分支1.0
 <!-- #  -->
-方块检测
+# 方块检测
 
 <img src="cap.jpg">
+### 方案一
 <img src="demo1.png">
+### 方案二
 <img src="demo2.png">
 <img src="demo.jpg">
 <!-- #  -->
+
+## 通过两种方法混用提高识别数量
+
+### 方案一
+<img src="demo3.png">
+### 方案二
+<img src="demo4.png">
+### 混合后识别
+<img src="demo5.png">
+
 
 ## 　流程
 获得一张图片->
