@@ -3,9 +3,9 @@
 
 <img src="cap.jpg">
 ### 方案一
-<img src="demo1.jpg">
+<img src="demo1.png">
 ### 方案二
-<img src="demo2.jpg">
+<img src="demo2.png">
 
 <img src="demo.jpg">
 
