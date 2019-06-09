@@ -7,6 +7,7 @@
 #include <random>
 #include "detect.h"
 #include "realsense.h"
+#include "task.h"
 //30 20 20 red
 //60 20 20 green
 //120 20 20 blue
@@ -31,7 +32,7 @@ enum test{
 };
 int main(int argc, const char** argv){
 	cv::Mat img,clone_img,depth_img;
-	detect detecter;
+	task detecter;
 
 	test ustest;
 	cv::VideoCapture cap;
@@ -41,15 +42,25 @@ int main(int argc, const char** argv){
 	else ustest=IMG;
 
 	if(ustest==IMG){
-		img=cv::imread("../../cap.jpg");
+		img=cv::imread("../../cap7.jpg");
 		if (!img.data || img.channels() != 3){
 			printf("error img name \n");
 			return -1;
 		}
 		cv::Mat img1=img.clone();
 		cv::Mat img2=img.clone();
-		detecter.Getaxisbyhsv(img1);
-	 	detecter.Getaxis(img2);
+		auto Getaxisbyhsv=std::async(std::launch::async,[&img1,&detecter](){
+			detecter.Getaxisbyhsv(img1);
+		});
+		auto Getaxis=std::async(std::launch::async,[&img2,&detecter](){
+			detecter.Getaxis(img2);
+		});
+		Getaxisbyhsv.get();
+		Getaxis.get();
+
+		detecter.update();
+		detecter.draw(img);
+
 		cv::imshow("img" ,img);
 		cv::imshow("img1" ,img1);
 		cv::imshow("img2" ,img2);
@@ -70,6 +81,8 @@ int main(int argc, const char** argv){
 				img=clone_img.clone(); 
 				cv::undistort(clone_img, img,CM,D);
 			}
+
+
 		// detecter.Getaxis(img);
 		detecter.Getaxisbyhsv(img);
 		 t = (double)cv::getTickFrequency()/((double)cv::getTickCount() - t) ;

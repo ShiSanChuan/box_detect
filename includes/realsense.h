@@ -24,6 +24,7 @@ public:
     }
     bool init(int _height=640,int _width=480);
     bool get(cv::Mat &img,cv::Mat &depth);
+    bool get(cv::Mat &img,cv::Mat &depth,cv::Mat &rotation);
 private:
     static void *read_func(void *param);
     int creatthreadread();

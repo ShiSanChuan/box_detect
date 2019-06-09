@@ -1,33 +1,32 @@
-#include <algorithm>
-#include <opencv2/opencv.hpp>
-#include "Eigen/Dense"
 
-enum Boxtype{
-	GREEN,
-	RED,
-	BLUE,
-	ORANGE,
-	NONE
-};
+#include "box.h"
+void box::SetDistance(int distance){
+	box::distance=distance;
+}
 
-class box
-{
-private:
-	
-	Boxtype type; 
-	cv::Scalar color;
-	Eigen::AngleAxisf rotation;
-	Eigen::Translation3f translation;
-	//guess=(rotation*translation).matrix ()
-	Eigen::Matrix4f  guess;
-	cv::Point axis2D;//该方形中心像素在原图的中心位置
-	int distance;//距离通过尺度变换估计距离
+cv::Point &box::Getaxis2D(){
+	return axis2D;
+}
 
-public:
-	box(Boxtype _type,cv::Mat _rotation,cv::Mat _translation):type(_type) {
+cv::Mat &box::Getrotation(){
+	return rotation;
+}
 
-		
-	}
-	~box();
-	
-};
+cv::Mat &box::Gettranslation(){
+	return translation;
+}
+
+std::vector<cv::Point> &box::GetPoint4(){
+	return point4;
+}
+
+bool box::operator ==( box & other){
+	double x_dis=this->Getaxis2D().x-other.Getaxis2D().x;
+	double y_dis=this->Getaxis2D().y-other.Getaxis2D().y;
+	if(std::sqrt(x_dis*x_dis+y_dis*y_dis)<100)return true;
+	return false;
+}
+
+bool box::operator !=( box & other){
+	return !(*this==other);
+}

@@ -17,6 +17,10 @@ bool realsense::get(cv::Mat &_img, cv::Mat &_depth){
     pthread_mutex_unlock(&Mutex);
     return true;
 }
+bool realsense::get(cv::Mat &_img, cv::Mat &_depth,cv::Mat &rotation){
+
+    return true;
+}
 
 int realsense::creatthreadread(){
     flag=true;
@@ -41,6 +45,9 @@ void *realsense::read_func(void *param){
             cv::Mat img_tmp(cv::Size(width,height),CV_8UC3,(void*)color.get_data(),cv::Mat::AUTO_STEP);
             cv::Mat depth_tmp(cv::Size(width,height),CV_8UC1,(void*)depth.get_data(),cv::Mat::AUTO_STEP);
 
+            auto pose=data.as<rs2::pose_frame>().get_pose_data();
+            // pose.translation;
+//#todo
             pthread_mutex_lock(&Mutex);
             img_tmp.copyTo(img);
             depth_tmp.copyTo(depth_img);
@@ -64,6 +71,7 @@ bool realsense::init(int _height,int _width){
     rs2::config cfg;
     cfg.enable_stream(RS2_STREAM_COLOR, width,height, RS2_FORMAT_BGR8, 60);
     cfg.enable_stream(RS2_STREAM_DEPTH, width,height, RS2_FORMAT_Z16, 60);
+    cfg.enable_stream(RS2_STREAM_POSE, RS2_FORMAT_6DOF);
 
     auto profile=pipe.start(cfg);
     auto sensor=profile.get_device().first<rs2::depth_sensor>();

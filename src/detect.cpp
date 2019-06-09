@@ -126,7 +126,7 @@ void detect::moveLightDiff(cv::Mat &img,int radius){
 	img=img-img_tmp;
 }
 
-void detect::drawboxContours(cv::Mat & img,std::vector<cv::Point> &polygon,type _type){
+void detect::drawboxContours(cv::Mat & img,std::vector<cv::Point> &polygon,type _type,bool flag){
 	std::vector<cv::Point2f> image_points;
 	std::vector<cv::Point3f> qurapoints;
 	int size=polygon.size();
@@ -152,6 +152,9 @@ void detect::drawboxContours(cv::Mat & img,std::vector<cv::Point> &polygon,type 
 		color=cv::Scalar(255,0,0);
 	}
 	if(size==4){
+		if(std::abs(pointdistance(polygon[0],polygon[1])-pointdistance(polygon[0],polygon[size-1]))<50){
+			std::swap(p1, high);
+		}
 		if(pointdistance(polygon[0],polygon[1])<pointdistance(polygon[0],polygon[size-1])){
 			std::swap(p1, p2);
 		}
@@ -168,7 +171,6 @@ void detect::drawboxContours(cv::Mat & img,std::vector<cv::Point> &polygon,type 
 			}
 		}else{
 			if(pointdistance(polygon[0],polygon[1])<pointdistance(polygon[1],polygon[2])){
-				std::cout<<"??"<<std::endl;
 				high=-high;
 				std::swap(p1, high);
 			}
@@ -198,29 +200,48 @@ void detect::drawboxContours(cv::Mat & img,std::vector<cv::Point> &polygon,type 
 
  	projectPoints(end_point3D, rotation_vector, translation_vector, CM, D, end_point2D);
     
-    if(size==4){	
+    if(size==4){
+    	if(flag)	
 		for(int i=0;i<size;i++){
 			cv::line(img,polygon[i], end_point2D[i], color, 2);
 			cv::line(img,end_point2D[i],end_point2D[(i+1)%size],color,2);
 			cv::line(img,polygon[i] ,polygon[(i+1)%size], color,2);
+			polygon.push_back(end_point2D[i]);
 		}
 	}else if(size==6){
+		if(flag)
 		for(int i=0;i<size;i++){
 			// cv::putText(img, std::to_string(i),polygon[i], cv::FONT_HERSHEY_SIMPLEX, 1,color );
 			cv::line(img,polygon[i] ,polygon[(i+1)%size], color,2);
 		}
+		if(flag)
 		for(int i=0;i<size;i+=2){
 			cv::line(img,polygon[i%size] ,end_point2D[0], color,2);
 			cv::line(img,polygon[(i+1)%size] ,end_point2D[1], color,2);
 		}
+		polygon.insert(polygon.begin()+2, end_point2D[1]);
+		polygon.insert(polygon.begin()+3, polygon.back());
+		polygon.pop_back();
+		polygon.insert(polygon.begin()+4, end_point2D[0]);
+		// std::swap(polygon[3],polygon[7]);
 	}
+	end_point3D.clear();
+	end_point2D.clear();
+	end_point3D.push_back(cv::Point3d(p1/2,p2/2,high/2));
+	projectPoints(end_point3D, rotation_vector, translation_vector, CM, D, end_point2D);
+	// cv::circle(img, end_point2D[0], 6,  cv::Scalar(0,0,0));
+	// #todo
+	boxs[_type].push_back( box(_type, rotation_vector.clone(), translation_vector.clone(),
+		end_point2D[0],polygon));
 }
 //h s v
 const  cv::Scalar detect::Red_min(134,59./255,80./255);
 const cv::Scalar detect::Red_max(360,255./255,231./255);
-
+//22 78 22
 const cv::Scalar detect::Green_min(22,37./255,22./255);
 const cv::Scalar detect::Green_max(208,255./255,238./255);
+
+std::vector<std::vector<box>> detect::boxs(box_type);
 
 bool detect::three2four(std::vector<cv::Point> &polygon){
 
@@ -229,8 +250,9 @@ bool detect::three2four(std::vector<cv::Point> &polygon){
 }
 
 int detect::Getaxisbyhsv(cv::Mat &img){
-	cv::Mat hsv,bgr,bak_img;
-	bak_img=img.clone();
+	cv::Mat hsv,bgr;
+	// cv::Mat bak_img;
+	// bak_img=img.clone();
 	img.convertTo(bgr, CV_32FC3, 1.0 / 255, 0);
 	cvtColor(bgr, hsv, cv::COLOR_BGR2HSV);
 
@@ -247,7 +269,6 @@ int detect::Getaxisbyhsv(cv::Mat &img){
 		}
 		dst.convertTo(dst, CV_8UC3, 255.0, 0);
 		medianBlur(dst,dst,3);
-		// cv::cvtColor(dst, dst, CV_BGR2GRAY);
 		cv::Canny(dst, dst, 10, 250,3);
 		std::vector<std::vector<cv::Point> > contours;
 		std::vector<cv::Vec4i> hierarchy;
@@ -257,11 +278,6 @@ int detect::Getaxisbyhsv(cv::Mat &img){
 
 		cv::drawContours(BLACK_img, contours, -1, cv::Scalar(255),4);
 		
-		// cv::Mat kernel = getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(3, 3));
-		// morphologyEx(BLACK_img,BLACK_img,cv::MORPH_CLOSE  ,kernel);
-
-	 //    morphologyEx(BLACK_img,BLACK_img,cv::MORPH_DILATE  ,kernel);
-
 	    contours.clear();
 	    hierarchy.clear();
 	    cv::findContours(BLACK_img, contours,hierarchy, CV_RETR_EXTERNAL , CV_CHAIN_APPROX_SIMPLE);
@@ -278,6 +294,7 @@ int detect::Getaxisbyhsv(cv::Mat &img){
 			}else if(polygon.size()==4){
 				if(std::abs(angle(polygon[1] ,polygon[3], polygon[0])-
 				angle(polygon[1] ,polygon[3], polygon[2]))>0.4)continue;
+				// fixpoint(bak_img,polygon);
 				drawboxContours(img,polygon,_type);
 			}
 		}
@@ -345,9 +362,7 @@ int detect::Getaxis(cv::Mat &img){
 	for(int i=0;i<static_cast<int>(contours.size());i++){
 		int size=cv::contourArea(contours[i]);
 		if(size<800)continue;
-		std::vector<cv::Point> polygon,hull;
-		// convexHull(contours[i],hull);
-		// approxPolyDP(cv::Mat(hull), polygon, arcLength(contours[i], 1)*0.02, 1);//
+		std::vector<cv::Point> polygon;
 		approxPolyDP(contours[i], polygon, arcLength(contours[i], 1)*0.04, 1);//
 		double area = fabs(contourArea(polygon));
 		// if(polygon.size()==4)std::cout<<"poly "<<polygon.size()<<"size "<<size<<" area"<<area<<std::endl;
@@ -370,13 +385,9 @@ int detect::Getaxis(cv::Mat &img){
 			}else continue;
 			fixpoint(bak_img,polygon);
 			// for(int i=0;i<4;i++){
-			// 	cv::line(img,polygon[i] , polygon[(i+1)%4],  cv::Scalar(0,0,0),2);
+			// 	cv::line(img,polygon[i] , polygon[(i+1)%4],  cv::Scalar(0,0,0),7);
 			// }
 			drawboxContours(img,polygon,boxtype);
-
-			auto mm=cv::moments(polygon,false);
-			cv::circle(img, cv::Point(mm.m10/mm.m00,mm.m01/mm.m00), 6,  cv::Scalar(0,0,0));
-
 		}
 	}
 	// cv::imshow("black_img", BLACK_img);
