@@ -46,9 +46,13 @@ int main(int argc, const char** argv){
 			printf("error img name \n");
 			return -1;
 		}
-		detecter.Getaxisbyhav(img);
-	 	// detecter.Getaxis(img);
+		cv::Mat img1=img.clone();
+		cv::Mat img2=img.clone();
+		detecter.Getaxisbyhsv(img1);
+	 	detecter.Getaxis(img2);
 		cv::imshow("img" ,img);
+		cv::imshow("img1" ,img1);
+		cv::imshow("img2" ,img2);
 		cv::waitKey(0);
 		return 0;
 	}
@@ -67,7 +71,7 @@ int main(int argc, const char** argv){
 				cv::undistort(clone_img, img,CM,D);
 			}
 		// detecter.Getaxis(img);
-		detecter.Getaxisbyhav(img);
+		detecter.Getaxisbyhsv(img);
 		 t = (double)cv::getTickFrequency()/((double)cv::getTickCount() - t) ;
 
 		 cv::putText(img, FPS+std::to_string(t),cv::Point(5,20), cv::FONT_HERSHEY_SIMPLEX, 1,cv::Scalar(0,0,255) );

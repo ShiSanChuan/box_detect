@@ -2,7 +2,13 @@
 方块检测
 
 <img src="cap.jpg">
+### 方案一
+<img src="demo1.jpg">
+### 方案二
+<img src="demo2.jpg">
+
 <img src="demo.jpg">
+
 <!-- #  -->
 
 ## 　流程

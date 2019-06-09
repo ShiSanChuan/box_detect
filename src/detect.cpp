@@ -129,10 +129,11 @@ void detect::moveLightDiff(cv::Mat &img,int radius){
 void detect::drawboxContours(cv::Mat & img,std::vector<cv::Point> &polygon,type _type){
 	std::vector<cv::Point2f> image_points;
 	std::vector<cv::Point3f> qurapoints;
-	if(polygon.size()<4)return;
-
+	int size=polygon.size();
+	if(polygon.size()!=4&&polygon.size()!=6)return;
+	float high= -20;
 	std::vector<cv::Point2f> _polygon;
-	for(int i=0;i<static_cast<int>(polygon.size());i++)//bug
+	for(int i=0;i<size;i++)//bug
 		_polygon.push_back(polygon[i]);
 
 	cv::Scalar color;
@@ -150,38 +151,68 @@ void detect::drawboxContours(cv::Mat & img,std::vector<cv::Point> &polygon,type 
 		p1=120.0;
 		color=cv::Scalar(255,0,0);
 	}
+	if(size==4){
+		if(pointdistance(polygon[0],polygon[1])<pointdistance(polygon[0],polygon[size-1])){
+			std::swap(p1, p2);
+		}
+		qurapoints.push_back(cv::Point3f(0.,0.,0.));
+		qurapoints.push_back(cv::Point3f(p1,0.,0.));
+		qurapoints.push_back(cv::Point3f(p1,p2,0.));
+		qurapoints.push_back(cv::Point3f(0.,p2,0.));
+		cv::solvePnP(qurapoints, _polygon, CM, D, rotation_vector, translation_vector,false,CV_ITERATIVE);
+	}else if(size==6){
+		if(pointdistance(polygon[0],polygon[1])<pointdistance(polygon[0],polygon[size-1])){
+			std::swap(p1, p2);
+			if(pointdistance(polygon[0],polygon[size-1])<pointdistance(polygon[1],polygon[2])){
+				std::swap(p2, high);
+			}
+		}else{
+			if(pointdistance(polygon[0],polygon[1])<pointdistance(polygon[1],polygon[2])){
+				std::cout<<"??"<<std::endl;
+				high=-high;
+				std::swap(p1, high);
+			}
+		}
 
-	if(pointdistance(polygon[0],polygon[1])<pointdistance(polygon[0],polygon[3])){
-		std::swap(p1, p2);
+		qurapoints.push_back(cv::Point3f(0.,0.,0.));
+		qurapoints.push_back(cv::Point3f(p1,0.,0.));
+		qurapoints.push_back(cv::Point3f(p1,0.,high));
+		qurapoints.push_back(cv::Point3f(p1,p2,high));
+		qurapoints.push_back(cv::Point3f(0.,p2,high));
+		qurapoints.push_back(cv::Point3f(0.,p2,0.));
+		cv::solvePnP(qurapoints, _polygon, CM, D, rotation_vector, translation_vector,false,CV_EPNP);
 	}
-	qurapoints.push_back(cv::Point3f(0.,0.,0.));
-	qurapoints.push_back(cv::Point3f(p1,0.,0.));
-	qurapoints.push_back(cv::Point3f(p1,p2,0.));
-	qurapoints.push_back(cv::Point3f(0.,p2,0.));
-
-	cv::solvePnP(qurapoints, _polygon, CM, D, rotation_vector, translation_vector);
 	std::cout<<"rotation:"<<std::endl<<rotation_vector<<std::endl;
 	std::cout<<"translation:"<<std::endl<<translation_vector<<std::endl;
 	std::vector<cv::Point3d> end_point3D;
 	std::vector<cv::Point2d> end_point2D;
-	double high= -20;
-	end_point3D.push_back(cv::Point3d(0,0,high));
-	end_point3D.push_back(cv::Point3d(p1,0,high));
-	end_point3D.push_back(cv::Point3d(p1,p2,high));
-	end_point3D.push_back(cv::Point3d(0,p2,high));
+	if(size==4){
+		end_point3D.push_back(cv::Point3d(0,0,high));
+		end_point3D.push_back(cv::Point3d(p1,0,high));
+		end_point3D.push_back(cv::Point3d(p1,p2,high));
+		end_point3D.push_back(cv::Point3d(0,p2,high));
+	}else if(size==6){
+		end_point3D.push_back(cv::Point3d(0,0,high));
+		end_point3D.push_back(cv::Point3d(p1,p2,0));
+	}
 
  	projectPoints(end_point3D, rotation_vector, translation_vector, CM, D, end_point2D);
     
-    cv::line(img,polygon[0], end_point2D[0], color, 2);
-    cv::line(img,polygon[1], end_point2D[1], color, 2);
-	cv::line(img,polygon[2], end_point2D[2], color, 2);
-	cv::line(img,polygon[3], end_point2D[3], color, 2);
-
-	std::vector<cv::Point2f> srcpoint,aimpoint;
-
-	for(int i=0;i<4;i++){
-		aimpoint.push_back(cv::Point2f((double)end_point2D[i].x,(double)end_point2D[i].y));
-		cv::line(img,end_point2D[i],end_point2D[(i+1)%4],color,2);
+    if(size==4){	
+		for(int i=0;i<size;i++){
+			cv::line(img,polygon[i], end_point2D[i], color, 2);
+			cv::line(img,end_point2D[i],end_point2D[(i+1)%size],color,2);
+			cv::line(img,polygon[i] ,polygon[(i+1)%size], color,2);
+		}
+	}else if(size==6){
+		for(int i=0;i<size;i++){
+			// cv::putText(img, std::to_string(i),polygon[i], cv::FONT_HERSHEY_SIMPLEX, 1,color );
+			cv::line(img,polygon[i] ,polygon[(i+1)%size], color,2);
+		}
+		for(int i=0;i<size;i+=2){
+			cv::line(img,polygon[i%size] ,end_point2D[0], color,2);
+			cv::line(img,polygon[(i+1)%size] ,end_point2D[1], color,2);
+		}
 	}
 }
 //h s v
@@ -191,14 +222,19 @@ const cv::Scalar detect::Red_max(360,255./255,231./255);
 const cv::Scalar detect::Green_min(22,37./255,22./255);
 const cv::Scalar detect::Green_max(208,255./255,238./255);
 
-int detect::Getaxisbyhav(cv::Mat &img){
-	cv::Mat hsv,bgr;
+bool detect::three2four(std::vector<cv::Point> &polygon){
+
+
+	return true;
+}
+
+int detect::Getaxisbyhsv(cv::Mat &img){
+	cv::Mat hsv,bgr,bak_img;
+	bak_img=img.clone();
 	img.convertTo(bgr, CV_32FC3, 1.0 / 255, 0);
 	cvtColor(bgr, hsv, cv::COLOR_BGR2HSV);
 
-	
-
-	auto func=[&](cv::Scalar min,cv::Scalar max){
+	auto func=[&](cv::Scalar min,cv::Scalar max,type _type){
 		cv::Mat dst = cv::Mat::zeros(hsv.size(), CV_32FC3);
 		cv::Mat mask;
 		inRange(hsv, min, max, mask);
@@ -217,43 +253,42 @@ int detect::Getaxisbyhav(cv::Mat &img){
 		std::vector<cv::Vec4i> hierarchy;
 		cv::findContours(dst, contours,hierarchy, CV_RETR_EXTERNAL , CV_CHAIN_APPROX_SIMPLE);
 		
-		cv::drawContours(img, contours, -1, cv::Scalar(0,0,0),1);
+		cv::Mat BLACK_img(img.size(),CV_8UC1,cv::Scalar(0));
+
+		cv::drawContours(BLACK_img, contours, -1, cv::Scalar(255),4);
 		
+		// cv::Mat kernel = getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(3, 3));
+		// morphologyEx(BLACK_img,BLACK_img,cv::MORPH_CLOSE  ,kernel);
+
+	 //    morphologyEx(BLACK_img,BLACK_img,cv::MORPH_DILATE  ,kernel);
+
+	    contours.clear();
+	    hierarchy.clear();
+	    cv::findContours(BLACK_img, contours,hierarchy, CV_RETR_EXTERNAL , CV_CHAIN_APPROX_SIMPLE);
+		// cv::drawContours(img, contours, -1, cv::Scalar(0,0,0),4);
 		for(int i=0;i<static_cast<int>(contours.size());i++){
 			int size=cv::contourArea(contours[i]);
 			if(size<800)continue;
 			std::vector<cv::Point> polygon;
-			approxPolyDP(contours[i], polygon, arcLength(contours[i], 1)*0.04, 1);
+			approxPolyDP(contours[i], polygon, arcLength(contours[i], 1)*0.01, 1);
 			double area = fabs(contourArea(polygon));
-			if(area<1000||area>20000)continue;
+			// if(area<1000||area>20000)continue;
 			if(polygon.size()==6){
-				std::vector<int> len;
-				for(int i=0;i<6;i++)len.push_back(pointdistance(polygon[i], polygon[(i+1)&6]));
-				auto iter=std::max_element(len.begin(), len.end());
-				for(int i=0;i<static_cast<int>(polygon.size());i++){
-					cv::line(img,polygon[i] , polygon[(i+1)%4],  cv::Scalar(255,0,0),3);
-				}
-				// pointdistance
+				drawboxContours(img,polygon,_type);
 			}else if(polygon.size()==4){
 				if(std::abs(angle(polygon[1] ,polygon[3], polygon[0])-
 				angle(polygon[1] ,polygon[3], polygon[2]))>0.4)continue;
-				// fixpoint(img,polygon);
-
-			for(int i=0;i<static_cast<int>(polygon.size());i++){
-				cv::line(img,polygon[i] , polygon[(i+1)%4],  cv::Scalar(255,0,0),3);
-			}
-
-				// drawboxContours(img,polygon,boxtype);
+				drawboxContours(img,polygon,_type);
 			}
 		}
 
 	};
 
-	auto RED=std::async(std::launch::async,func,Red_min,Red_max);
-	// auto GREEN=std::async(std::launch::async,func,Green_min,Green_max);
+	auto RedThread=std::async(std::launch::async,func,Red_min,Red_max,RED);
+	auto GreenThread=std::async(std::launch::async,func,Green_min,Green_max,GREEN);
 
-	RED.get();
-	// GREEN.get();
+	RedThread.get();
+	GreenThread.get();
 
 	return 0;
 }
@@ -305,7 +340,7 @@ int detect::Getaxis(cv::Mat &img){
 	std::vector<cv::Vec4i> hierarchy;
 	cv::findContours(BLACK_img, contours,hierarchy, CV_RETR_LIST , CV_CHAIN_APPROX_SIMPLE);
 
-	drawContours(img,contours,-1,cv::Scalar(0,255,0),1,8,hierarchy);
+	// drawContours(img,contours,-1,cv::Scalar(0,255,0),1,8,hierarchy);
     
 	for(int i=0;i<static_cast<int>(contours.size());i++){
 		int size=cv::contourArea(contours[i]);
@@ -334,9 +369,9 @@ int detect::Getaxis(cv::Mat &img){
 				std::cout<<"GREEN"<<std::endl;
 			}else continue;
 			fixpoint(bak_img,polygon);
-			for(int i=0;i<4;i++){
-				cv::line(img,polygon[i] , polygon[(i+1)%4],  cv::Scalar(0,0,0),2);
-			}
+			// for(int i=0;i<4;i++){
+			// 	cv::line(img,polygon[i] , polygon[(i+1)%4],  cv::Scalar(0,0,0),2);
+			// }
 			drawboxContours(img,polygon,boxtype);
 
 			auto mm=cv::moments(polygon,false);

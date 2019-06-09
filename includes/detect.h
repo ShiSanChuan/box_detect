@@ -28,10 +28,11 @@ private:
 	void AdjustContrastAndLight(cv::Mat & src,double alpha,double beta);
 	double angle(cv::Point pt1, cv::Point pt2, cv::Point pt0);
 	void moveLightDiff(cv::Mat &img,int radius);
+	bool three2four(std::vector<cv::Point> &polygon);
 public:
 	void SetConfig(cv::Mat &_CM,cv::Mat &_D);
 	int Getaxis(cv::Mat &img);
-	int Getaxisbyhav(cv::Mat &img);
+	int Getaxisbyhsv(cv::Mat &img);
 	cv::Mat rotation_vector;
 	cv::Mat translation_vector;
 };

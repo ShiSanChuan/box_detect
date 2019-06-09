@@ -7,5 +7,5 @@ public:
 	connect();
 	~connect();
 private:
-	serial serial;
+	// serial serial;
 };
