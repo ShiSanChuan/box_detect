@@ -4,10 +4,8 @@
 #include <random>
 #include "detect.h"
 
-float cameraMatrix[3][3]={480.0456075942316, 0, 328.4887103828126, 0, 478.8971079559076, 249.130831872676, 0, 0, 1};
-float distCoeffs[5]={-0.3914272330750649, 0.136309583256524, -0.0008870578061134298, 0.0005048983403991557, 0};
-cv::Mat CM=cv::Mat(3,3,CV_32FC1,cameraMatrix);
-cv::Mat D=cv::Mat(1,5,CV_32FC1,distCoeffs);
+cv::Mat CM;
+cv::Mat D;
 
 cv::Scalar detect::GetColor(cv::Mat imgROI,int size){
 	cv::Scalar color(0,0,0);
@@ -239,7 +237,7 @@ const  cv::Scalar detect::Red_min(134,59./255,80./255);
 const cv::Scalar detect::Red_max(360,255./255,231./255);
 //22 78 22
 const cv::Scalar detect::Green_min(22,37./255,22./255);
-const cv::Scalar detect::Green_max(208,255./255,238./255);
+const cv::Scalar detect::Green_max(208,255./255,240./255);
 
 std::vector<std::vector<box>> detect::boxs(box_type);
 

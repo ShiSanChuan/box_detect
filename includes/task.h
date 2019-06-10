@@ -6,6 +6,7 @@ class task  :public detect
 {
 public:
 	void draw(cv::Mat &img);
+	void detect(cv::Mat &img);
 	void update();
 	void updateEnviroment(cv::Mat rotation,cv::Mat transilation);
 };

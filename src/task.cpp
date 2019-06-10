@@ -1,5 +1,19 @@
 #include "task.h"
 #include "detect.h"
+#include <future>
+void task::detect(cv::Mat &img){
+	cv::Mat img1,img2;
+	img1=img.clone();
+	img2=img.clone();
+	auto Get1=std::async(std::launch::async,[&](){
+		Getaxisbyhsv(img1);
+	});
+	auto Get2=std::async(std::launch::async,[&](){
+		Getaxis(img2);
+	});
+	Get1.get();
+	Get2.get();
+}
 
 void task::draw(cv::Mat &img){
 	for(int i=0;i<box_type;i++){
@@ -35,7 +49,7 @@ void task::update(){
 	for(int i=0;i<box_type;i++){
 		if(boxs[i].size()<2)continue;
 		std::sort(boxs[i].begin(), boxs[i].end(),[](box &a,box &b){
-			return a.Getaxis2D().x<b.Getaxis2D().x;//#todo
+			return a.Getaxis2D().x>b.Getaxis2D().x;//#todo
 		});
 		boxs[i].erase(std::unique(boxs[i].begin(),boxs[i].end()),boxs[i].end());
 	}
